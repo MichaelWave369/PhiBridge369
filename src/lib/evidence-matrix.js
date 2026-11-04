@@ -16,6 +16,7 @@ import {
 } from './safety-controller.js';
 import { normalizeWristConfig, DEFAULT_WRIST_CONFIG, WRIST_LIMITS } from './xr-calibration.js';
 import { runDigitalTwinCampaign } from './digital-twin.js';
+import { evaluateHazardAtlas } from './hazard-atlas.js';
 
 export const EVIDENCE_FORMAT = 'phibridge-evidence/1';
 const bridge = (...actions) => actions.reduce(
@@ -103,6 +104,17 @@ const CHECKS = Object.freeze({
     return a.assessment.permitted && a.mockStepExecuted
       && !b.assessment.permitted && !b.mockStepExecuted;
   },
+  'HAZ-001': () => {
+    const r = evaluateHazardAtlas();
+    return r.stats.modelObserved === 13 && r.stats.modelGaps === 0
+      && r.stats.externalPending === r.stats.hazards && !r.hardwareAuthorized;
+  },
+  'HAZ-002': () => {
+    const r = evaluateHazardAtlas();
+    return r.stats.noModel === 6 && r.hazards.every(
+      h => h.externalStatus === 'EXTERNAL_PENDING' && !h.physicalSafetyVerified && !h.riskRated
+    ) && !r.riskAssessmentComplete && !r.externalEvidenceVerified;
+  },
   'TWIN-001': () => {
     const r = runDigitalTwinCampaign({ profile: 'nominal', seed: 369, trials: 2, ticks: 8 });
     return r.totals.executedMoves === 16 && r.totals.invariantViolations === 0
@@ -188,6 +200,14 @@ export const REQUIREMENTS = Object.freeze([
     method: 'Wrist calibration pure function', test: 'src/lib/xr-calibration.test.js',
     owner: 'PhiBridge369', note: 'Does not establish Quest 3 fit or comfort.' },
 
+  { id: 'HAZ-001', domain: 'Hazard atlas', title: 'Hazards map to live model observations with explicit gaps',
+    level: 'model', method: 'Traceable hazard registry and deterministic fault evidence',
+    test: 'src/lib/hazard-atlas.test.js', owner: 'PhiBridge369',
+    note: 'Counts model observations only; physical harm mitigation is not assessed.' },
+  { id: 'HAZ-002', domain: 'Hazard atlas', title: 'Model observations cannot mark external hazard evidence complete',
+    level: 'model', method: 'External-verification and no-risk-rating invariants',
+    test: 'src/lib/hazard-atlas.test.js', owner: 'PhiBridge369',
+    note: 'Every preliminary hazard still requires external evidence and qualified review.' },
   { id: 'TWIN-001', domain: 'Digital twin', title: 'Nominal multi-step simulation requires joint gate checks',
     level: 'model', method: 'Repeated integrated simulated moves', test: 'src/lib/digital-twin.test.js',
     owner: 'PhiBridge369', note: 'Only virtual step counters and model permission gates were exercised.' },

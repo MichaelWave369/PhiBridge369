@@ -83,7 +83,17 @@
 - [ ] Physics-calibrated vessel dynamics based on real measured hardware
 - [ ] Independent physical safety and cybersecurity assessment
 
-## R11 — Guarded telepresence (conditional)
+## R11 — Hazard Coverage Atlas
+- [x] Nineteen preliminary hazard IDs mapped to model probes and R09 requirement IDs
+- [x] Thirteen modeled observations and six explicitly unmodeled areas
+- [x] All hazards retain external evidence pending regardless of software outcomes
+- [x] Filterable hazard grid, detailed model traces and next evidence requirements
+- [x] Repeatable, bounded scans and unsigned local JSON export
+- [x] Two new R09 hazard traceability checks and CI hazard atlas artifact
+- [ ] Qualified physical hazard inventory and independent risk assessment
+- [ ] Verified physical safety, security, XR and governance evidence
+
+## R12 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

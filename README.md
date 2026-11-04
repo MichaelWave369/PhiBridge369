@@ -1,7 +1,7 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R10 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R11 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
@@ -149,6 +149,16 @@ R10 brings the existing simulated bridge, PHB health, protocol and independent s
 - R09 now tracks four additional model checks, TWIN-001 through TWIN-004. Real physical stop, electrical isolation, authenticated transport, independent review and Quest 3 validation **remain pending**.
 
 All results are computed in-memory against test fixtures. **No physical actuator, medical interface or verified digital body is involved.** Read [R10 simulation campaign specification](docs/R10_DIGITAL_TWIN_CAMPAIGNS.md).
+
+## R11 — Hazard Coverage Atlas
+
+The **Hazard Coverage Atlas** gathers 19 preliminary safety, control, network, VR, privacy and governance concerns in an interactive, filterable grid. Thirteen hazards have an explicit simulated behavior probe in R07, R08 or R10; six are intentionally **NO MODEL**, because their real-world behavior has not been simulated. All nineteen require independent evidence.
+
+Use **Jump to Hazard Atlas**, select **Run Coverage Scan**, then click a hazard to view its model trace, related R09 requirement IDs and next required physical or independent review. Choose a repeatable seed, trial count and step count, or export an unsigned JSON report.
+
+CI also runs **npm run atlas** and uploads **phi-bridge-r11-hazard-atlas**, a model-only artifact with stable hazard references. R09 gains two traceability checks, HAZ-001 and HAZ-002.
+
+**No modeled observation is a physical risk reduction or safety certification.** The atlas does not assign risk severity or authorize hardware; the actual product-specific hazard analysis remains pending. See [R11 hazard coverage specification](docs/R11_HAZARD_ATLAS.md).
 
 ## Repository responsibilities
 
