@@ -28,3 +28,30 @@ footer{border-top:1px solid #263e50;display:flex;justify-content:space-between;g
 @media(max-width:1100px){.site-shell{padding:0 25px}.room{grid-template-columns:1fr 1fr}.bridge-panel{grid-column:2;grid-row:1}.vessel-panel{grid-column:1/-1}.avatar-stage{height:290px}.lower-grid{grid-template-columns:1fr}.room-panel{padding:20px}.vessel-readout{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:720px){.site-shell{padding:0 15px}.topbar{height:69px}.header-center{display:none}.brand-word{font-size:18px}.repo-link{font-size:9px;padding:10px}.intro{padding:34px 0 20px}h1{font-size:48px}.intro-row{display:block}.version-pill{display:inline-flex;margin-top:18px}.notice{align-items:flex-start}.notice-right{display:none}.metrics{grid-template-columns:1fr 1fr}.metric{padding:15px}.metric-value{font-size:20px}.room{grid-template-columns:1fr}.bridge-panel,.vessel-panel{grid-column:auto;grid-row:auto}.lower-grid{display:block}.audit-card{margin-top:13px}.control-layout{gap:14px}.dpad{grid-template-columns:repeat(3,40px);grid-template-rows:repeat(3,40px)}.control-extra button{font-size:9px;padding:12px 6px}.vessel-readout{grid-template-columns:1fr 1fr}.principles{display:block}.principles p{margin:14px 0}.principles a{display:block}footer{flex-wrap:wrap;font-size:9px}.stop-banner{display:block}.stop-banner span{display:block;margin-top:5px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+/* R03 Control Lab: controller calibration and read-only signal telemetry */
+.calibration-card{margin-top:13px}
+.calibration-card>p{max-width:950px}
+.calibration-grid{display:grid;grid-template-columns:1.05fr 1.05fr .9fr;gap:13px}
+.calibration-grid>div{background:#0e2638;border:1px solid #26475a;border-radius:6px;padding:18px;min-width:0}
+.cal-label{font:500 10px 'DM Mono',monospace;letter-spacing:.13em;color:#4cd5d0;margin-bottom:16px}
+.pad-status{display:flex;gap:10px;align-items:center;font:500 13px 'Space Grotesk',sans-serif;color:#9eafbd}
+.pad-indicator{display:inline-block;width:9px;height:9px;border-radius:50%;background:#677c89}
+.pad-online{color:#60e5d6}.pad-online .pad-indicator{background:#4adecf;box-shadow:0 0 10px #4adecf70}
+.cal-note{font:11px/1.6 'DM Sans',sans-serif;color:#809fb1;margin:12px 0 0}
+.axis-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.axis-metrics div{border:1px solid #24485b;background:#0a2030;border-radius:4px;padding:10px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.axis-metrics span{font:9px 'DM Mono',monospace;letter-spacing:.08em;color:#7293a7}
+.axis-metrics strong{font:500 13px 'DM Mono',monospace;color:#d6eff0;overflow-wrap:anywhere}
+.calibration-slider{display:block;margin-bottom:18px}
+.calibration-slider>span{display:flex;justify-content:space-between;gap:10px;color:#bed4db;font-size:12px}
+.calibration-slider output{font:500 12px 'DM Mono',monospace;color:#54e2d8}
+.calibration-slider input{width:100%;accent-color:#4de3d7;margin:11px 0 0}
+.calibrate-button{width:100%;background:#174451;border:1px solid #397481;color:#bceee8;border-radius:4px;padding:12px 8px;font:500 10px 'DM Mono',monospace}
+.calibrate-button:hover:not(:disabled){border-color:#5de6d8;background:#235b67}
+.cal-safety-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #254558;font-size:12px;color:#b2c9d3}
+.cal-safety-line strong{font:500 10px 'DM Mono',monospace;color:#67d9d2}
+.calibration-safety .cal-note{margin-top:16px}
+@media(max-width:1100px){.calibration-grid{grid-template-columns:1fr 1fr}.calibration-safety{grid-column:1/-1}}
+@media(max-width:720px){.calibration-grid{grid-template-columns:1fr}.calibration-safety{grid-column:auto}.calibration-card{padding:17px}.axis-metrics strong{font-size:12px}}

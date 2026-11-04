@@ -8,12 +8,15 @@
 - [x] Session PRISM event stream
 - [x] Reducer safety tests and GitHub Actions verification
 - [x] GitHub Pages workflow (publication depends on repo settings)
-- [ ] Review PR, verify checks, and merge
+- [x] PR #1 and JSX repair PR #2 merged; R01 renderer smoke-tested
 
 ## R02 — Embodiment calibration
-- [ ] Gamepad and VR control adapter experiments
+- [x] Standard Gamepad API adapter with thumbstick + D-pad and neutral calibration
+- [x] Adjustable deadzone and repeat interval, with pure mapping tests
+- [ ] WebXR/Quest 3 adapter experiment
 - [ ] Configurable sensory channels
-- [ ] Repeatable movement/latency experiments
+- [x] Configurable command repeat interval for simulation and live axis readout
+- [ ] Dedicated input-to-render and hardware latency experiments
 - [ ] Further keyboard, touch, and screen reader tests
 
 ## R03 — Protocol laboratory
