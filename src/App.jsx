@@ -6,6 +6,7 @@ import SafetyBlueprintLab from './SafetyBlueprintLab.jsx';
 import EvidenceMatrixLab from './EvidenceMatrixLab.jsx';
 import DigitalTwinLab from './DigitalTwinLab.jsx';
 import HazardCoverageAtlas from './HazardCoverageAtlas.jsx';
+import SystemsArchitectureStudio from './SystemsArchitectureStudio.jsx';
 import { pickStandardGamepad, finiteAxis, normalizeGamepad, shouldRepeat } from './lib/gamepad.js';
 import {
   bridgeReducer, canMove, canSense, initialBridgeState,
@@ -177,13 +178,13 @@ function App() {
 
       <main>
         <div className="intro">
-          <div className="eyebrow"><span className="line" /> PHI369 LABS / HAZARD TRACEABILITY / RUNG 11</div>
+          <div className="eyebrow"><span className="line" /> PHI369 LABS / SYSTEM ARCHITECTURE / RUNG 12</div>
           <div className="intro-row">
             <div>
               <h1>The <em>Mirror Room.</em></h1>
               <p className="intro-copy">An experimental bridge between intention and embodiment. Establish consent. Open a simulated link. Explore a virtual vessel.</p>
             </div>
-            <div className="version-pill"><span className="live-point" /> PROTOTYPE 1.1 <span className="separator">/</span> LOCAL SIM</div>
+            <div className="version-pill"><span className="live-point" /> PROTOTYPE 1.2 <span className="separator">/</span> LOCAL SIM</div>
           </div>
         </div>
 
@@ -196,6 +197,7 @@ function App() {
         <a className="evidence-jump" href="#evidence-matrix">↓ &nbsp; JUMP TO REQUIREMENTS & EVIDENCE MATRIX</a>
         <a className="evidence-jump" href="#digital-twin-lab">↓ &nbsp; JUMP TO DIGITAL TWIN LAB</a>
         <a className="evidence-jump" href="#hazard-coverage-atlas">↓ &nbsp; JUMP TO HAZARD ATLAS</a>
+        <a className="evidence-jump" href="#systems-architecture-studio">↓ &nbsp; JUMP TO PHB SYSTEMS STUDIO</a>
 
         <section className="metrics" aria-label="Bridge telemetry">
           <div className="metric"><span className="metric-label">BRIDGE STATUS</span><strong className={'metric-value status-' + status.toLowerCase()}><i className="indicator" />{status}</strong><span className="metric-sub">Virtual gateway</span></div>
@@ -355,13 +357,15 @@ function App() {
 
         <HazardCoverageAtlas />
 
+        <SystemsArchitectureStudio />
+
         <section className="principles">
           <span className="principle-number">Φ / 369</span>
           <p>A connection is not a transfer. A copy is not proven continuity. <strong>An occupant is not property.</strong></p>
           <a href="https://github.com/MichaelWave369/PhiBridge369" target="_blank" rel="noreferrer">READ THE RESEARCH CHARTER ↗</a>
         </section>
       </main>
-      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R11 / HAZARD ATLAS · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
+      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R12 / PHB SYSTEMS STUDIO · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
     </div>
   );
 }

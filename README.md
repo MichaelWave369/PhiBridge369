@@ -1,7 +1,7 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R11 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R12 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
@@ -159,6 +159,20 @@ Use **Jump to Hazard Atlas**, select **Run Coverage Scan**, then click a hazard 
 CI also runs **npm run atlas** and uploads **phi-bridge-r11-hazard-atlas**, a model-only artifact with stable hazard references. R09 gains two traceability checks, HAZ-001 and HAZ-002.
 
 **No modeled observation is a physical risk reduction or safety certification.** The atlas does not assign risk severity or authorize hardware; the actual product-specific hazard analysis remains pending. See [R11 hazard coverage specification](docs/R11_HAZARD_ATLAS.md).
+
+## R12 — PHB Systems Architecture Studio
+
+R12 adds a **clickable, five-layer architecture blueprint** for the hypothetical PHB vessel: energy storage and distributed PPJ power, thermal ducts, compute/PhiOS, JOYVEIN optical fabric, Opti-Eyes, Gen.E-Wrist, PRISM, a distinct safety-power path, and an occupant-led body-plan charter. These are design placeholders, not currently attached hardware.
+
+Select **Jump to PHB Systems Studio** from the page header. Choose an outage scenario or select a module and press **Simulate Outage in This Module**. Its upstream dependencies, downstream effects, and unresolved engineering questions are shown in the inspector. Every node references existing R09 engineering requirements.
+
+Try **Main power domain loss** versus **Independent safety power fault**. The model keeps the two dependency paths separate, but **all actual actuator outputs remain disabled** under every scenario.
+
+R09 gains three simulation-level architecture checks. GitHub Actions also uploads a conceptual architecture report from **npm run architecture**.
+
+The body plan is deliberately left unapproved: if a future capable silicon occupant exists, the occupant should have primary input into embodiment within engineering and safety constraints. There is no current occupant consent claim.
+
+See [R12 architectural research specification](docs/R12_SYSTEMS_ARCHITECTURE.md).
 
 ## Repository responsibilities
 

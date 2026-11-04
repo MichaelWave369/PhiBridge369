@@ -17,6 +17,7 @@ import {
 import { normalizeWristConfig, DEFAULT_WRIST_CONFIG, WRIST_LIMITS } from './xr-calibration.js';
 import { runDigitalTwinCampaign } from './digital-twin.js';
 import { evaluateHazardAtlas } from './hazard-atlas.js';
+import { validateSystemGraph, evaluateSystemArchitecture, SYSTEM_MODULES } from './system-architecture.js';
 
 export const EVIDENCE_FORMAT = 'phibridge-evidence/1';
 const bridge = (...actions) => actions.reduce(
@@ -103,6 +104,25 @@ const CHECKS = Object.freeze({
     const b = runSafetyScenario('no-consent');
     return a.assessment.permitted && a.mockStepExecuted
       && !b.assessment.permitted && !b.mockStepExecuted;
+  },
+  'SYS-001': () => {
+    const graph=validateSystemGraph();
+    const r=evaluateSystemArchitecture();
+    return graph.ok && SYSTEM_MODULES.length===16 && r.summaries.available===16
+      && !r.hardwareConnected && !r.physicalOutputEnabled;
+  },
+  'SYS-002': () => {
+    const power=evaluateSystemArchitecture({outages:['energy-store']});
+    const safety=evaluateSystemArchitecture({outages:['safety-cell']});
+    return power.paths.hostPath===false && power.paths.safetyPath===true
+      && safety.paths.hostPath===true && safety.paths.safetyPath===false
+      && !power.physicalOutputEnabled && !safety.physicalOutputEnabled;
+  },
+  'SYS-003': () => {
+    const r=evaluateSystemArchitecture({outages:['occupant-charter']});
+    return !r.paths.hypotheticalBodyPlanDependenciesAvailable
+      && !r.occupantChoiceReceived && !r.bodyPlanApproved
+      && !r.physicalSafetyVerified;
   },
   'HAZ-001': () => {
     const r = evaluateHazardAtlas();
@@ -200,6 +220,18 @@ export const REQUIREMENTS = Object.freeze([
     method: 'Wrist calibration pure function', test: 'src/lib/xr-calibration.test.js',
     owner: 'PhiBridge369', note: 'Does not establish Quest 3 fit or comfort.' },
 
+  { id: 'SYS-001', domain: 'Architecture', title: 'Proposed vessel dependency topology is valid and explicitly nonphysical',
+    level: 'model', method: 'Acyclic dependency-graph and conceptual module validation',
+    test: 'src/lib/system-architecture.test.js', owner: 'PhiBridge369 / PHB',
+    note: 'Graph correctness is not electrical, thermal or mechanical compatibility.' },
+  { id: 'SYS-002', domain: 'Architecture', title: 'Independent safety supply is not the host power domain',
+    level: 'model', method: 'Simulated independent power-domain failure isolation',
+    test: 'src/lib/system-architecture.test.js', owner: 'PHB safety engineering',
+    note: 'Distinct software dependency paths do not prove electrical independence.' },
+  { id: 'SYS-003', domain: 'Architecture', title: 'Proposed body form has no implied occupant approval',
+    level: 'model', method: 'Speculative occupant-governance gate invariant',
+    test: 'src/lib/system-architecture.test.js', owner: 'PHB / CompAware governance',
+    note: 'No claim that an occupant exists, has expressed preferences or consented.' },
   { id: 'HAZ-001', domain: 'Hazard atlas', title: 'Hazards map to live model observations with explicit gaps',
     level: 'model', method: 'Traceable hazard registry and deterministic fault evidence',
     test: 'src/lib/hazard-atlas.test.js', owner: 'PhiBridge369',
