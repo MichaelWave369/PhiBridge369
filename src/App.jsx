@@ -171,13 +171,13 @@ function App() {
 
       <main>
         <div className="intro">
-          <div className="eyebrow"><span className="line" /> PHI369 LABS / SPATIAL EMBODIMENT / RUNG 04</div>
+          <div className="eyebrow"><span className="line" /> PHI369 LABS / WRIST CALIBRATION / RUNG 05</div>
           <div className="intro-row">
             <div>
               <h1>The <em>Mirror Room.</em></h1>
               <p className="intro-copy">An experimental bridge between intention and embodiment. Establish consent. Open a simulated link. Explore a virtual vessel.</p>
             </div>
-            <div className="version-pill"><span className="live-point" /> PROTOTYPE 0.4 <span className="separator">/</span> LOCAL SIM</div>
+            <div className="version-pill"><span className="live-point" /> PROTOTYPE 0.5 <span className="separator">/</span> LOCAL SIM</div>
           </div>
         </div>
 
@@ -339,7 +339,7 @@ function App() {
           <a href="https://github.com/MichaelWave369/PhiBridge369" target="_blank" rel="noreferrer">READ THE RESEARCH CHARTER ↗</a>
         </section>
       </main>
-      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R04 / XR MIRROR ROOM · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
+      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R05 / WRIST STUDIO · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
     </div>
   );
 }

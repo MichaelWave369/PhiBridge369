@@ -28,12 +28,20 @@
 - [ ] On-device Quest 3 fit, visibility, and latency validation
 - [ ] Full articulated hand representation and adjustable wrist placement
 
-## R05 — Protocol laboratory
+## R05 — Desktop Wrist Studio and XR Dry Run
+- [x] Bounded, in-memory wrist position, tilt and size controls
+- [x] Desktop left-arm stand-in and visual calibration presets
+- [x] Simulated thumbstick and select actions use the existing consent and stop reducer
+- [x] Pure calibration and simulated XR safety tests
+- [ ] Quest 3 placement, tracking, controller select, and visual comfort validation
+- [ ] Detailed articulated WebXR hand models, after real device tests
+
+## R06 — Protocol laboratory
 - [ ] Versioned PHB mock adapter and JOYVEIN protocol spec
 - [ ] PRISM audit schema and replayable test sessions
 - [ ] Security threat model and privacy review
 
-## R06 — Guarded telepresence (conditional)
+## R07 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

@@ -72,3 +72,29 @@ footer{border-top:1px solid #263e50;display:flex;justify-content:space-between;g
 .xr-warning{margin-top:20px;border:1px solid #366774;background:#0a3038;padding:11px;border-radius:5px;color:#8be1da;font:9px/1.6 'DM Mono',monospace;letter-spacing:.05em}
 @media(max-width:950px){.xr-layout{grid-template-columns:1fr}.xr-canvas{height:350px;min-height:350px}.xr-sidebar{padding:17px}}
 @media(max-width:580px){.xr-canvas{height:275px;min-height:275px}.xr-card{padding:16px}.xr-availability{font-size:16px}}
+
+/* R05: desktop wrist studio + simulated XR inputs */
+.xr-tuning{margin-top:22px;padding-top:20px;border-top:1px solid #2d5365}
+.xr-tuning-header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.xr-tuning-header h3{font:600 23px 'Space Grotesk',sans-serif;margin:9px 0 2px}
+.xr-tuning-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:19px}
+.xr-tuning-panel{padding:19px;border:1px solid #264a5e;border-radius:6px;background:#0c2538;min-width:0}
+.xr-presets{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px}
+.xr-presets button,.xr-simulator-pad button{color:#ace8e4;background:#153749;border:1px solid #347584;border-radius:4px}
+.xr-presets button{padding:8px 11px;font:500 10px 'DM Mono',monospace}
+.xr-presets button:hover,.xr-simulator-pad button:hover:not(:disabled){background:#205b6b}
+.xr-visible-check{display:flex;align-items:center;gap:8px;font-size:12px;color:#ccdee5;margin:10px 0 22px}
+.xr-visible-check input{accent-color:#3de3d4;width:16px;height:16px}
+.xr-tuning-panel .calibration-slider{margin-bottom:12px}
+.xr-tuning-panel .calibration-slider input{margin-top:5px}
+.xr-simulator-pad{display:grid;grid-template-columns:repeat(3,50px);grid-template-rows:repeat(2,44px);gap:7px;width:max-content;margin:3px auto 19px}
+.xr-simulator-pad button{font-size:21px}
+.xr-sim-sense,.xr-sim-stop{width:100%;padding:12px 9px;margin-top:8px;border-radius:4px;font:500 11px 'DM Mono',monospace}
+.xr-sim-sense{border:1px solid #388477;background:#19494b;color:#c8f4ec}
+.xr-sim-stop{border:1px solid #c36b69;background:#492631;color:#ffe0da}
+.xr-sim-stop:hover{background:#6a303b}
+.xr-dry-status{margin-top:16px;border-top:1px solid #315061}
+.xr-dry-status div{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #254458;font:11px 'DM Mono',monospace;gap:12px}
+.xr-dry-status span{color:#8eb0be}
+.xr-dry-status strong{color:#58e0d8;white-space:nowrap}
+@media(max-width:780px){.xr-tuning-grid{grid-template-columns:1fr}.xr-tuning-header{display:block}.xr-tuning-header .keyboard-hint{display:block;margin-top:8px}}

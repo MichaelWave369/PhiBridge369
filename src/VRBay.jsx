@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { normalizeXRStick, xrCanMove, xrSelectAction } from './lib/webxr-input.js';
 import { shouldRepeat } from './lib/gamepad.js';
+import { DEFAULT_WRIST_CONFIG, WRIST_LIMITS, WRIST_PRESETS, normalizeWristConfig, wristPose } from './lib/xr-calibration.js';
 
 /**
  * R04: a simulation-only 3D Mirror Room and optional immersive WebXR session.
@@ -84,8 +85,34 @@ export default function VRBay({ state, send, deadzone = 0.22, repeatMs = 240 }) 
   const mount = useRef(null);
   const rendererRef = useRef(null);
   const sessionRef = useRef(null);
-  const latest = useRef({ state, send, deadzone, repeatMs });
-  latest.current = { state, send, deadzone, repeatMs };
+  const [wristConfig, setWristConfig] = useState(DEFAULT_WRIST_CONFIG);
+  const [wristVisible, setWristVisible] = useState(true);
+  const latest = useRef({ state, send, deadzone, repeatMs, wristConfig, wristVisible });
+  latest.current = { state, send, deadzone, repeatMs, wristConfig, wristVisible };
+
+  const adjustWrist = (key, value) => {
+    setWristConfig((previous) => normalizeWristConfig({ ...previous, [key]: value }));
+  };
+  const dryRun = (action) => {
+    // The dry-run generates *ordinary reducer actions*, not a separate input path.
+    // Authorization is re-validated by bridgeReducer, including after emergency stop.
+    const axes = {
+      forward: [0, 0, 0, -0.9],
+      backward: [0, 0, 0, 0.9],
+      left: [0, 0, -0.9, 0],
+      right: [0, 0, 0.9, 0],
+    };
+    if (axes[action]) {
+      const direction = normalizeXRStick({ mapping: 'xr-standard', axes: axes[action] }, deadzone);
+      if (direction) send('MOVE', { direction, source: 'XR-DRY-RUN' });
+      return;
+    }
+    if (action === 'left-select') send('EMERGENCY_STOP', { source: 'XR-DRY-RUN' });
+    if (action === 'right-select') {
+      const allowed = xrSelectAction('right', state);
+      if (allowed) send(allowed, { source: 'XR-DRY-RUN' });
+    }
+  };
   const [availability, setAvailability] = useState('checking');
   const [active, setActive] = useState(false);
   const [previewError, setPreviewError] = useState('');
@@ -184,6 +211,18 @@ export default function VRBay({ state, send, deadzone = 0.22, repeatMs = 240 }) 
     ]);
     const controllers = [];
     const removes = [];
+    const wristTargets = [];
+    const attachWrist = (target) => {
+      const plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.32, 0.16),
+        new THREE.MeshBasicMaterial({ map: wristPanel.texture, side: THREE.DoubleSide, depthTest: false }),
+      );
+      plane.renderOrder = 50;
+      plane.visible = false;
+      target.add(plane);
+      wristTargets.push(plane);
+      return plane;
+    };
     for (let i = 0; i < 2; i++) {
       const controller = renderer.xr.getController(i);
       const hand = renderer.xr.getHand(i);
@@ -206,27 +245,15 @@ export default function VRBay({ state, send, deadzone = 0.22, repeatMs = 240 }) 
         new THREE.MeshStandardMaterial({ color: 0x69e9d6, emissive: 0x39bfb4, emissiveIntensity: 0.8 }),
       );
       hand.add(handMarker);
-      const attachWrist = (target) => {
-        const plane = new THREE.Mesh(
-          new THREE.PlaneGeometry(0.32, 0.16),
-          new THREE.MeshBasicMaterial({ map: wristPanel.texture, side: THREE.DoubleSide, depthTest: false }),
-        );
-        plane.position.set(-0.11, 0.10, -0.18);
-        plane.rotation.set(-0.5, 0, -0.3);
-        plane.renderOrder = 50;
-        plane.visible = false;
-        target.add(plane);
-        return plane;
-      };
       const controllerWrist = attachWrist(controller);
       const handWrist = attachWrist(hand);
       const onControllerConnected = (event) => {
         controller.userData.inputSource = event.data;
-        controllerWrist.visible = event.data?.handedness === 'left';
+        controllerWrist.visible = event.data?.handedness === 'left' && latest.current.wristVisible;
       };
       const onHandConnected = (event) => {
         hand.userData.inputSource = event.data;
-        handWrist.visible = event.data?.handedness === 'left';
+        handWrist.visible = event.data?.handedness === 'left' && latest.current.wristVisible;
       };
       const onControllerDisconnected = () => {
         controller.userData.inputSource = null;
@@ -257,6 +284,21 @@ export default function VRBay({ state, send, deadzone = 0.22, repeatMs = 240 }) 
       controllers.push(controller);
     }
 
+    // Desktop-only left controller/wrist stand-in, so offsets can be tuned
+    // even when the Quest 3 is off. It is hidden in immersive sessions.
+    const desktopAnchor = new THREE.Group();
+    desktopAnchor.position.set(-0.72, 1.42, -1.9);
+    desktopAnchor.rotation.set(-0.10, 0.20, 0);
+    const mockArm = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.07, 0.085, 0.45, 12),
+      new THREE.MeshStandardMaterial({ color: 0x517d9e, metalness: 0.48, roughness: 0.36 }),
+    );
+    mockArm.rotation.x = 0.4;
+    desktopAnchor.add(mockArm);
+    const desktopWrist = attachWrist(desktopAnchor);
+    desktopWrist.visible = true;
+    scene.add(desktopAnchor);
+
     const resize = () => {
       const width = Math.max(1, root.clientWidth);
       const height = Math.max(1, root.clientHeight);
@@ -274,6 +316,18 @@ export default function VRBay({ state, send, deadzone = 0.22, repeatMs = 240 }) 
     let lastDisplay = '';
     renderer.setAnimationLoop((time) => {
       const snapshot = latest.current.state;
+      const currentWrist = latest.current.wristConfig;
+      const pose = wristPose(currentWrist);
+      for (const panel of wristTargets) {
+        panel.position.set(...pose.position);
+        panel.rotation.set(...pose.rotation);
+        panel.scale.setScalar(pose.scale);
+        // Preserves the existing handedness/tracking rule for XR anchors.
+        if (panel !== desktopWrist) {
+          panel.visible = Boolean(latest.current.wristVisible && panel.parent.userData.inputSource?.handedness === 'left');
+        }
+      }
+      desktopAnchor.visible = !sessionRef.current && latest.current.wristVisible;
       vessel.position.x = 1.8 + snapshot.pose.x * 0.14;
       vessel.position.z = -3.35 + snapshot.pose.y * 0.14;
       vessel.rotation.y = -(snapshot.pose.heading * Math.PI / 180);
@@ -386,7 +440,7 @@ export default function VRBay({ state, send, deadzone = 0.22, repeatMs = 240 }) 
     <section className="card xr-card" aria-label="Quest 3 WebXR Mirror Room">
       <div className="card-heading">
         <div>
-          <span className="eyebrow muted">R04 / SPATIAL EMBODIMENT</span>
+          <span className="eyebrow muted">R05 / SPATIAL CALIBRATION</span>
           <h2>VR Mirror Room</h2>
         </div>
         <span className="keyboard-hint">THREE.JS / WEBXR / SIM ONLY</span>
@@ -415,6 +469,58 @@ export default function VRBay({ state, send, deadzone = 0.22, repeatMs = 240 }) 
           <div className="cal-safety-line"><span>Left wrist panel</span><strong>STATUS HUD</strong></div>
           <p className="cal-note">Hand tracking is requested only if supported. The R04 hands are abstract tracking markers, not articulated anatomy. You must connect the simulated bridge and authorize motion/sensing in the 2D controls first. Use the Quest system menu to exit immersive mode if needed.</p>
           <div className="xr-warning">SIMULATION ONLY · NO PHYSICAL ROBOT · NO CONSCIOUSNESS TRANSFER</div>
+        </div>
+      </div>
+      <div className="xr-tuning">
+        <div className="xr-tuning-header">
+          <div><span className="eyebrow muted">R05 / NO HEADSET REQUIRED</span><h3>Wrist Studio & XR Dry Run</h3></div>
+          <span className="keyboard-hint">VISUAL PREVIEW / LOCAL ONLY</span>
+        </div>
+        <p className="cal-note">Adjust a mock left wrist in the 3D preview, then test simulated XR input through the same reducer that protects every other control path. These are exploratory offsets, not verified Quest wrist measurements.</p>
+        <div className="xr-tuning-grid">
+          <div className="xr-tuning-panel">
+            <div className="cal-label">LEFT WRIST DISPLAY</div>
+            <div className="xr-presets" role="group" aria-label="Wrist display presets">
+              {Object.entries(WRIST_PRESETS).map(([name, preset]) => (
+                <button key={name} type="button" onClick={() => setWristConfig(normalizeWristConfig(preset))}>{name.toUpperCase()}</button>
+              ))}
+            </div>
+            <label className="xr-visible-check">
+              <input type="checkbox" checked={wristVisible} onChange={(event) => setWristVisible(event.target.checked)} />
+              Show wrist status panel
+            </label>
+            {[
+              ['x', 'Lateral (m)'], ['y', 'Height (m)'], ['z', 'Depth (m)'],
+              ['pitch', 'Tilt (rad)'], ['roll', 'Roll (rad)'], ['scale', 'Size'],
+            ].map(([key, label]) => (
+              <label className="calibration-slider" key={key}>
+                <span>{label}<output>{wristConfig[key].toFixed(2)}</output></span>
+                <input type="range" min={WRIST_LIMITS[key][0]} max={WRIST_LIMITS[key][1]}
+                  step="0.01" value={wristConfig[key]} disabled={!wristVisible}
+                  onChange={(event) => adjustWrist(key, Number(event.target.value))} />
+              </label>
+            ))}
+            <button className="calibrate-button" type="button" onClick={() => setWristConfig(normalizeWristConfig(DEFAULT_WRIST_CONFIG))}>RESET WRIST TO DEFAULT</button>
+          </div>
+          <div className="xr-tuning-panel">
+            <div className="cal-label">SIMULATE XR CONTROLLER ACTIONS</div>
+            <div className="xr-simulator-pad" role="group" aria-label="Desktop simulation of Quest controller movement">
+              <span /><button type="button" disabled={!xrCanMove(state)} onClick={() => dryRun('forward')} aria-label="Simulate XR forward">↑</button><span />
+              <button type="button" disabled={!xrCanMove(state)} onClick={() => dryRun('left')} aria-label="Simulate XR left">←</button>
+              <button type="button" disabled={!xrCanMove(state)} onClick={() => dryRun('backward')} aria-label="Simulate XR backward">↓</button>
+              <button type="button" disabled={!xrCanMove(state)} onClick={() => dryRun('right')} aria-label="Simulate XR right">→</button>
+            </div>
+            <button className="xr-sim-sense" type="button" disabled={!state.connected || !state.permissions.sensory || state.emergencyStopped}
+              onClick={() => dryRun('right-select')}>RIGHT SELECT / MOCK FEEDBACK</button>
+            <button className="xr-sim-stop" type="button" onClick={() => dryRun('left-select')}>LEFT SELECT / SIM EMERGENCY STOP</button>
+            <div className="xr-dry-status" aria-live="polite">
+              <div><span>LINK</span><strong>{state.connected ? 'CONNECTED' : 'OFFLINE'}</strong></div>
+              <div><span>MOTION</span><strong>{xrCanMove(state) ? 'AUTHORIZED' : 'BLOCKED'}</strong></div>
+              <div><span>STOP</span><strong>{state.emergencyStopped ? 'ENGAGED' : 'READY'}</strong></div>
+              <div><span>PHB POSITION</span><strong>{state.pose.x}, {state.pose.y}</strong></div>
+            </div>
+            <p className="cal-note">First connect the simulated bridge and authorize movement in the main panel. Stop can always be pressed; to restore movement, use the original manual reset and consent sequence.</p>
+          </div>
         </div>
       </div>
     </section>
