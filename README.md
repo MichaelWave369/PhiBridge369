@@ -52,6 +52,33 @@ You can leave the controller disconnected and continue using keyboard or touch c
 
 **Safety:** Emergency Stop instantly disconnects the simulator and revokes both permissions. A controller reconnecting cannot restore them. The adapter has no physical actuator path.
 
+## R04 — VR Mirror Room (Quest 3 / WebXR)
+
+The 3D research bay uses Three.js. Its **desktop preview** renders even without a headset if WebGL is available. Immersive VR runs only when the browser supports secure-context WebXR and a participant presses **Enter VR**. Start from the HTTPS GitHub Pages site in **Meta Quest Browser**. Configure **Motion commands** and/or **Sensory feedback** and establish the simulated link in the 2D control panel **before** entering VR.
+
+In immersive VR:
+- Look around the origin station, bridge arch, and simulated PHB vessel in room scale.
+- Move the simulated PHB using the left controller thumbstick; the existing reducer still requires permission, connection, and no emergency stop.
+- Left controller trigger/hand pinch (WebXR select): emergency-stop the simulated link and revoke both permissions.
+- Right controller trigger/hand pinch: request one mock feedback event, only if sensory permission is granted.
+- A small status placard follows the tracked left controller/hand anchor. R04 uses abstract hand markers rather than full articulated hand meshes.
+- Exit using the headset's system controls; the page also provides an Exit VR button when available outside immersion.
+
+**Important:** XR input is not mapped to your own locomotion. The PHB model moves in the lab, not the participant's camera, to avoid unexpected motion and nausea. Physical robot control, neural interfacing, brain capture, and consciousness transfer are not implemented.
+
+### Manual Quest 3 validation
+
+1. Open the deployed HTTPS link in the Quest Browser, connect the simulated bridge and grant **motion**.
+2. Select **Enter VR**. Look around the station. The digital twin should be visible to the right of the bridge arch.
+3. Move the left thumbstick and observe the PHB mockup stepping within bounds.
+4. Enable sensory permission in 2D first, return to VR, then try right-select for a mock pulse.
+5. Press left-select and verify that the virtual link stops. Further XR movement must not work.
+6. Exit VR using the Quest system menu; explicitly clear the stop, reconnect, and reauthorize via the 2D UI.
+
+WebXR requires HTTPS and a compatible browser; a successful CI build **cannot** verify headset tracking, comfort, or runtime VR permissions. Quest-specific behavior needs on-device validation.
+
+More detail: [R04 WebXR design and safety notes](docs/WEBXR_R04.md).
+
 ## Repository responsibilities
 
 | Area | Responsibility |
