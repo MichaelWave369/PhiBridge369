@@ -1,14 +1,14 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R03 — Mirror Room + Control Lab** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R09 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
 ## Research boundaries
 
 - **Demonstrated in R01–R03:** local state machine, explicit motion/sensory permissions, virtual movement, simulated feedback, stop-and-reset behavior, per-session audit, standardized Gamepad API input and calibration.
-- **Future engineering:** VR inputs, two-way feedback, guarded telepresence, qualified BCI research, modular PHB/JOYVEIN connectors.
+- **Research prototypes through R09:** desktop/VR input, mock feedback, isolated PHB protocol and health contracts, independent simulated safety gates, and requirements traceability. Future engineering includes guarded real telepresence, qualified BCI research, and PHB/JOYVEIN connectors.
 - **Not demonstrated:** consciousness transfer, whole-brain readout, a continuity-of-experience test, conscious artificial occupants, or physical robot connectivity.
 
 No data leaves the app by design; there are no APIs, telemetry uploads, accounts, neural interfaces, or hardware drivers. The CSS imports optional Google Fonts; remove that import for a fully offline application.
@@ -125,6 +125,18 @@ Select a scenario and choose **Run Safety Fault Test**. The lab displays (1) loc
 The safety model begins in SAFE_OFF. A failure creates a FAULT_LATCHED state. Restoring the input never restarts the mock output; a separate local reset returns to SAFE_OFF, followed by a deliberate local arm. No WebXR controller or network packet can bypass that logic.
 
 **No physical relays, motors, batteries, robot controllers or safety-rated interlocks are connected.** For the design rationale and unresolved mechanical, power, thermal, communications and standards requirements, see [R08 independent safety blueprint](docs/R08_SAFETY_BLUEPRINT.md).
+
+## R09 — Requirements & Evidence Matrix
+
+The **Evidence Matrix** brings all R01–R08 model safeguards together with explicit evidence owners, verification methods, unit-test references, and **unresolved external requirements**. Use the jump link near the top of the app and select **Run Model Checks** to execute pure simulator assertions. Filter by discipline or evidence level, expand individual requirement details, and optionally export an **unsigned local JSON report**.
+
+GitHub Actions now also runs the evidence generator after tests and build and uploads a report as the **phi-bridge-r09-model-evidence** artifact attached to the verification workflow. It includes the evaluated commit reference and remaining external gaps. The artifact is useful for engineering traceability, but is **not an independent certification or proof of real hardware behavior**.
+
+The physical deployment gate remains closed regardless of passing unit tests. An independently validated hardware stop, actual energy isolation, transport security, Quest 3 field testing and occupant/participant governance are still pending.
+
+See [R09 requirements and evidence specification](docs/R09_EVIDENCE_MATRIX.md). Run locally with:
+
+    npm run evidence
 
 ## Repository responsibilities
 

@@ -63,7 +63,17 @@
 - [ ] Independently engineered, inspected and validated hardware safety circuits
 - [ ] Real PHB prototype under qualified supervision (not authorized by R08)
 
-## R09 — Guarded telepresence (conditional)
+## R09 — Requirements & Evidence Matrix
+- [x] Stable requirement IDs, owners and verification methods across R01–R08
+- [x] Deterministic checks invoking actual model functions
+- [x] Explicit pending physical, security, XR and ethics evidence gates
+- [x] Interactive Evidence Matrix filters and per-requirement detail
+- [x] Machine-readable local JSON export
+- [x] CI-uploaded model evidence artifact with revision and run metadata
+- [ ] Qualified physical reviews, measurements and external validation
+- [ ] Authenticated/independently assessed evidence provenance
+
+## R10 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation
