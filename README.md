@@ -79,6 +79,20 @@ WebXR requires HTTPS and a compatible browser; a successful CI build **cannot** 
 
 More detail: [R04 WebXR design and safety notes](docs/WEBXR_R04.md).
 
+## R05 — Wrist Studio and XR Dry Run (no headset required)
+
+R05 addresses the unverified wrist placement problem without pretending to have measured a Quest 3 wearer's hands.
+
+- A **desktop left-forearm stand-in** and status placard appear in the 3D preview. This stand-in is hidden in actual immersive sessions.
+- Choose Compact, Raised, or Readable presets, then adjust bounded X/Y/Z offsets, pitch, roll and size. The settings also apply to a tracked left controller/hand anchor if immersive XR is entered.
+- Hide the wrist placard if it obstructs the scene. Calibration remains in memory and resets on reload.
+- A desktop **XR dry run** turns button presses into standard-mapped XR stick directions or select actions, then sends them through the same consent and emergency-stop reducer used by keyboard, gamepad and real WebXR controls.
+- Left select engages simulated stop unconditionally. Right select requests a mock sensory pulse only when authorized.
+
+This test harness is local and simulation-only. It does not transmit to physical robotics or validate consciousness transfer. **On-device Quest validation is still pending** for comfort, controller tracking, hand poses and wrist alignment.
+
+See [R05 Wrist Studio research notes](docs/R05_WRIST_STUDIO.md).
+
 ## Repository responsibilities
 
 | Area | Responsibility |
