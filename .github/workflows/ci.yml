@@ -16,3 +16,12 @@ jobs:
       - run: npm install --no-audit --no-fund
       - run: npm test
       - run: npm run build
+      - name: Generate simulation evidence snapshot
+        run: npm run evidence
+      - name: Upload evidence artifact (uncertified)
+        uses: actions/upload-artifact@v4
+        with:
+          name: phi-bridge-r09-model-evidence
+          path: artifacts/phi-bridge-r09-evidence.json
+          if-no-files-found: error
+          retention-days: 30
