@@ -1,6 +1,6 @@
 {
   "name": "phi-bridge-369",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,8 @@
     "test": "node --test src/lib/*.test.js",
     "evidence": "node scripts/write-evidence.mjs",
     "campaign": "node scripts/write-campaign.mjs",
-    "atlas": "node scripts/write-hazard-atlas.mjs"
+    "atlas": "node scripts/write-hazard-atlas.mjs",
+    "architecture": "node scripts/write-architecture.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

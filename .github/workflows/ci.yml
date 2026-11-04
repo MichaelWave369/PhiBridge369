@@ -43,3 +43,12 @@ jobs:
           path: artifacts/phi-bridge-r11-hazard-atlas.json
           if-no-files-found: error
           retention-days: 30
+      - name: Verify R12 dependency architecture and independent safety domain
+        run: npm run architecture
+      - name: Upload R12 systems blueprint (concept only)
+        uses: actions/upload-artifact@v4
+        with:
+          name: phi-bridge-r12-systems-architecture
+          path: artifacts/phi-bridge-r12-systems-architecture.json
+          if-no-files-found: error
+          retention-days: 30

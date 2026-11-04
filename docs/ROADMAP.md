@@ -93,7 +93,17 @@
 - [ ] Qualified physical hazard inventory and independent risk assessment
 - [ ] Verified physical safety, security, XR and governance evidence
 
-## R12 — Guarded telepresence (conditional)
+## R12 — PHB Systems Architecture Studio
+- [x] Sixteen hypothetical PHB modules across five interconnected architecture layers
+- [x] Separate conceptual main energy and independent safety power domains
+- [x] Traceable dependencies, selectable design inspector and downstream outage impacts
+- [x] Predefined host power, cooling, optical, safety and multi-fault scenarios
+- [x] Explicit occupant-led body-plan governance, without inferred consent
+- [x] Three new R09 architecture checks and CI concept-only blueprint artifact
+- [ ] Measured electrical, thermal, mechanical and optical design assumptions
+- [ ] Qualified independent physical safety and occupant governance review
+
+## R13 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation
