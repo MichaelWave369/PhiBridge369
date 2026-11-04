@@ -73,13 +73,13 @@ export function bridgeReducer(state, action) {
         y: clamp(state.pose.y + vector.y, -5, 5),
         heading: vector.heading,
       };
-      return writeAudit({ ...state, pose, commands: state.commands + 1 }, action, 'motion', 'Virtual step: ' + action.direction);
+      return writeAudit({ ...state, pose, commands: state.commands + 1 }, action, 'motion', 'Virtual step: ' + action.direction + (action.source === 'WEBXR' ? ' [WEBXR]' : ''));
     }
     case 'SENSE':
       if (!canSense(state)) {
         return writeAudit(state, action, 'denied', 'Feedback denied: link, stop, or permission gate');
       }
-      return writeAudit({ ...state, feedback: state.feedback + 1 }, action, 'feedback', 'Synthetic sensory pulse received');
+      return writeAudit({ ...state, feedback: state.feedback + 1 }, action, 'feedback', 'Synthetic sensory pulse received' + (action.source === 'WEBXR' ? ' [WEBXR]' : ''));
     case 'RESET_POSE':
       return writeAudit({ ...state, pose: { x: 0, y: 0, heading: 0 } }, action, 'reset', 'Virtual pose recentered');
     case 'EMERGENCY_STOP':

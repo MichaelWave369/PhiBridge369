@@ -20,6 +20,8 @@ test('Mirror Room renders the initial interface without a JSX runtime error', as
     assert.match(html, /EMERGENCY STOP/);
     assert.match(html, /Control Lab/);
     assert.match(html, /CAPTURE NEUTRAL CENTER/);
+    assert.match(html, /VR Mirror Room/);
+    assert.match(html, /ENTER VR \/ QUEST 3/);
   } finally {
     await server.close();
   }

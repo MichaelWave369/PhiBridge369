@@ -13,18 +13,27 @@
 ## R02 — Embodiment calibration
 - [x] Standard Gamepad API adapter with thumbstick + D-pad and neutral calibration
 - [x] Adjustable deadzone and repeat interval, with pure mapping tests
-- [ ] WebXR/Quest 3 adapter experiment
+- [x] R04 WebXR/Quest 3 spatial simulation adapter with local-floor scene and consent-gated XR input
 - [ ] Configurable sensory channels
 - [x] Configurable command repeat interval for simulation and live axis readout
 - [ ] Dedicated input-to-render and hardware latency experiments
 - [ ] Further keyboard, touch, and screen reader tests
 
-## R03 — Protocol laboratory
+## R04 — WebXR spatial Mirror Room
+- [x] Three.js desktop scene preview, humanoid PHB mockup, status panels
+- [x] Immersive VR opt-in via Quest Browser and local-floor reference space
+- [x] Left XR thumbstick movements behind existing reducer gates
+- [x] Left select emergency stop and right select mock sensory feedback
+- [x] Minimal wrist-attached status and hand-tracking markers, where supported
+- [ ] On-device Quest 3 fit, visibility, and latency validation
+- [ ] Full articulated hand representation and adjustable wrist placement
+
+## R05 — Protocol laboratory
 - [ ] Versioned PHB mock adapter and JOYVEIN protocol spec
 - [ ] PRISM audit schema and replayable test sessions
 - [ ] Security threat model and privacy review
 
-## R04 — Guarded telepresence (conditional)
+## R06 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

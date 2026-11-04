@@ -1,6 +1,6 @@
 {
   "name": "phi-bridge-369",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "three": "^0.181.0"
   },
   "devDependencies": {
     "vite": "^7.2.2"
