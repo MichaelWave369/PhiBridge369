@@ -1,7 +1,7 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R09 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R10 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
@@ -137,6 +137,18 @@ The physical deployment gate remains closed regardless of passing unit tests. An
 See [R09 requirements and evidence specification](docs/R09_EVIDENCE_MATRIX.md). Run locally with:
 
     npm run evidence
+
+## R10 — Digital Twin Verification Lab
+
+R10 brings the existing simulated bridge, PHB health, protocol and independent safety models together for **repeatable multi-fault campaigns**. Select Nominal, Compound failures, Communications faults or Seeded mixed-fault, adjust trials/steps/seed, then run the campaign.
+
+- Inspect allowed virtual steps, blocked movement, rejected packets and model invariant violations.
+- Open individual ticks to inspect fault conditions and their linked **R09 requirements**.
+- Repeat with the same seed for deterministic results or vary it for a different simulated fault sequence.
+- Export unsigned local JSON. In CI, run **npm run campaign** to generate an evidence artifact with revision/run metadata, covering all four profiles.
+- R09 now tracks four additional model checks, TWIN-001 through TWIN-004. Real physical stop, electrical isolation, authenticated transport, independent review and Quest 3 validation **remain pending**.
+
+All results are computed in-memory against test fixtures. **No physical actuator, medical interface or verified digital body is involved.** Read [R10 simulation campaign specification](docs/R10_DIGITAL_TWIN_CAMPAIGNS.md).
 
 ## Repository responsibilities
 

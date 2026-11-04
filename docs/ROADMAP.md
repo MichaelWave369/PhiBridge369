@@ -73,7 +73,17 @@
 - [ ] Qualified physical reviews, measurements and external validation
 - [ ] Authenticated/independently assessed evidence provenance
 
-## R10 — Guarded telepresence (conditional)
+## R10 — Digital Twin Verification Campaigns
+- [x] Repeatable multi-fault simulation across host consent, protocol, health and independent safety models
+- [x] Four campaign profiles: baseline, compound/recovery, communications/stop and seeded mixed faults
+- [x] Bounded seeds, trial count and step count with detailed per-tick trace
+- [x] R09 requirement links and TWIN-001 through TWIN-004 model checks
+- [x] Interactive desktop lab with local JSON export
+- [x] CI campaign artifact with explicit simulation-only claims
+- [ ] Physics-calibrated vessel dynamics based on real measured hardware
+- [ ] Independent physical safety and cybersecurity assessment
+
+## R11 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

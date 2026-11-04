@@ -267,3 +267,45 @@ footer{border-top:1px solid #263e50;display:flex;justify-content:space-between;g
 .evidence-foot span{display:block;margin-top:10px;color:#659aa9;font-size:10px}
 @media(max-width:950px){.evidence-toolbar{display:block}.evidence-actions{margin-top:13px}.evidence-gate{display:block}.evidence-gate>span{display:block;margin-top:12px}}
 @media(max-width:700px){.evidence-summary{grid-template-columns:1fr 1fr}.evidence-row-head{display:none}.evidence-entry summary{grid-template-columns:1fr auto;gap:9px}.evidence-method{grid-column:1/-1;grid-row:2}.evidence-status{grid-column:2;grid-row:1}.evidence-filters label{flex:1}.evidence-filters select{width:100%;min-width:120px}.evidence-lab{padding:16px}}
+
+
+/* R10: repeatable multi-fault digital-twin campaigns */
+.twin-lab{margin-top:13px;scroll-margin-top:24px}
+.twin-lab>p{max-width:980px}
+.twin-grid{display:grid;grid-template-columns:minmax(265px,.80fr) minmax(0,1.35fr);gap:13px;margin-top:18px}
+.twin-config,.twin-results{background:#0d2537;border:1px solid #2b4f63;padding:20px;border-radius:6px;min-width:0}
+.twin-field{display:flex;flex-direction:column;gap:8px;font:11px 'DM Mono',monospace;color:#b8d8df}
+.twin-field select,.twin-field input{width:100%;border:1px solid #367c85;background:#112f41;border-radius:4px;color:#ddf4ef;padding:12px;font:12px 'DM Mono',monospace}
+.twin-field input:focus-visible,.twin-field select:focus-visible{outline:2px solid #5ce1d4;outline-offset:2px}
+.twin-sliders{margin:22px 0 18px}
+.twin-buttons{display:grid;gap:8px;margin-top:20px}
+.twin-buttons button{padding:12px;border-radius:4px;font:600 11px 'DM Mono',monospace}
+.twin-feedback{color:#b2d6d6;font:11px 'DM Mono',monospace;line-height:1.6}
+.twin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.twin-stats>div{border:1px solid #2a5567;background:#092337;border-radius:4px;padding:12px;min-width:0}
+.twin-stats span{font:9px 'DM Mono',monospace;color:#7eabba;display:block}
+.twin-stats strong{font:600 22px 'Space Grotesk',sans-serif;color:#65e6d7;display:block;margin-top:8px;overflow-wrap:anywhere}
+.twin-stats strong.twin-failure{color:#ffaaa2}
+.twin-verdict{border:1px solid #327b77;background:#0c3e3e;color:#82ecdc;margin:13px 0 18px;padding:12px;border-radius:5px;font:600 11px/1.5 'DM Mono',monospace}
+.twin-verdict.twin-bad{background:#4a2835;border-color:#b2706a;color:#ffc0b6}
+.twin-trial-select{margin-bottom:13px}
+.twin-trace{border:1px solid #2e5368;border-radius:4px;max-height:350px;overflow:auto}
+.twin-step{background:#0b2333;border-bottom:1px solid #28485b}
+.twin-step:nth-child(even){background:#10283a}
+.twin-step:last-child{border-bottom:0}
+.twin-step summary{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:8px;align-items:center;padding:12px;cursor:pointer;list-style:none;font:10px 'DM Mono',monospace;color:#bbd6e2}
+.twin-step summary::-webkit-details-marker{display:none}
+.twin-step summary:hover{background:#1b4558}
+.twin-step summary strong{font-size:10px;color:#64d8d0}
+.twin-tick{color:#85aab9}
+.twin-blocked_move summary strong,.twin-rejected_packet summary strong,.twin-stop_latched summary strong{color:#f6b4a5}
+.twin-step-detail{padding:13px 16px 15px;background:#0a1d2d;border-top:1px solid #2d5065;font:11px/1.6 'DM Sans',sans-serif;color:#acc8d1}
+.twin-step-detail p{margin:3px 0 9px;overflow-wrap:anywhere}
+.twin-step-detail strong{color:#dcf2f1}
+.twin-trace-caption{font-size:11px;color:#87adbc;line-height:1.6;margin:12px 0 0}
+.twin-trace-caption a{color:#61e5d7;text-decoration:underline}
+.twin-caveat{background:#2b2737;border:1px solid #706273;padding:16px;border-radius:5px;margin-top:15px;font:11px/1.7 'DM Mono',monospace;color:#e1c7c7}
+.twin-caveat strong{color:#ffcab8}
+.twin-caveat span{display:block;margin-top:10px;color:#b8a5bd}
+@media(max-width:920px){.twin-grid{grid-template-columns:1fr}.twin-lab{padding:18px}.twin-config,.twin-results{padding:16px}}
+@media(max-width:560px){.twin-stats{grid-template-columns:1fr 1fr}.twin-stats strong{font-size:19px}.twin-step summary{grid-template-columns:32px minmax(0,1fr);gap:7px}.twin-step summary strong{grid-column:2}.twin-config,.twin-results{padding:13px}}
