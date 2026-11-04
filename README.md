@@ -116,6 +116,16 @@ Use the scenario selector, click **Evaluate Contract**, inspect pass/fail reason
 
 **Important:** A successful mock handshake is not a cybersecurity attestation or an operational safety certification. Read [R07 contract specification and physical integration gates](docs/R07_PHB_CONTRACTS.md).
 
+## R08 — Physical Integration Safety Blueprint
+
+The **Safety Blueprint Lab** is an independently modeled, browser-only safety state machine for future PHB integration. It is a hazard-analysis *teaching tool*, not an emergency-stop controller or hardware schematic.
+
+Select a scenario and choose **Run Safety Fault Test**. The lab displays (1) local operator authorization, (2) an independent safety state model, and (3) whether a single mock virtual movement could occur if **both** gates permit it. Test stop-loop opening, protective guard faults, watchdog loss, supply and thermal faults, remote arm/reset rejection, missing operator consent and explicit manual recovery.
+
+The safety model begins in SAFE_OFF. A failure creates a FAULT_LATCHED state. Restoring the input never restarts the mock output; a separate local reset returns to SAFE_OFF, followed by a deliberate local arm. No WebXR controller or network packet can bypass that logic.
+
+**No physical relays, motors, batteries, robot controllers or safety-rated interlocks are connected.** For the design rationale and unresolved mechanical, power, thermal, communications and standards requirements, see [R08 independent safety blueprint](docs/R08_SAFETY_BLUEPRINT.md).
+
 ## Repository responsibilities
 
 | Area | Responsibility |
