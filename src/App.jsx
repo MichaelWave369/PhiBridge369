@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import {
   bridgeReducer, canMove, canSense, initialBridgeState,
 } from './lib/bridge.js';
