@@ -98,3 +98,40 @@ footer{border-top:1px solid #263e50;display:flex;justify-content:space-between;g
 .xr-dry-status span{color:#8eb0be}
 .xr-dry-status strong{color:#58e0d8;white-space:nowrap}
 @media(max-width:780px){.xr-tuning-grid{grid-template-columns:1fr}.xr-tuning-header{display:block}.xr-tuning-header .keyboard-hint{display:block;margin-top:8px}}
+
+/* R06 protocol replay lab: local-only command-envelope diagnostics */
+.protocol-lab{margin-top:13px}
+.protocol-lab>p{max-width:980px}
+.protocol-layout{display:grid;grid-template-columns:minmax(260px,.82fr) minmax(0,1.35fr);gap:14px;margin-top:18px}
+.protocol-config,.protocol-output{min-width:0;border:1px solid #2a4c60;border-radius:7px;background:#0d2537;padding:19px}
+.protocol-select-label{display:block;font-size:12px;color:#b5cbd6;margin-bottom:8px}
+.protocol-config select{width:100%;border:1px solid #3b7c84;background:#133448;color:#e1f7f5;padding:11px;border-radius:4px}
+.protocol-config select:focus-visible{outline:2px solid #5be9da;outline-offset:2px}
+.protocol-actions{display:grid;gap:8px;margin-top:18px}
+.protocol-actions button{padding:13px 10px;border-radius:4px;font:500 11px 'DM Mono',monospace}
+.protocol-run{border:1px solid #40ddcf;background:#2ac6bb;color:#07303b;font-weight:600!important}
+.protocol-run:hover{background:#5ef0df}
+.protocol-clear{border:1px solid #395f72;background:#173346;color:#d4edf1}
+.protocol-subheading{margin-top:25px;margin-bottom:10px}
+.protocol-code{font:11px/1.65 'DM Mono',monospace;background:#061925;color:#93dcd8;border:1px solid #275163;padding:14px;border-radius:4px;overflow:auto}
+.protocol-empty{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;color:#88b1bf}
+.protocol-empty strong{color:#4be3d5;font:600 16px 'Space Grotesk',sans-serif}
+.protocol-empty p{max-width:380px;margin:14px 0 0;line-height:1.6;font-size:12px}
+.protocol-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.protocol-summary div{background:#092034;border:1px solid #2c4b5e;border-radius:4px;padding:12px 10px;min-width:0}
+.protocol-summary span{display:block;font:9px 'DM Mono',monospace;color:#7fa0b2}
+.protocol-summary strong{display:block;margin-top:6px;font:600 22px 'Space Grotesk',sans-serif;color:#62e8da;white-space:nowrap}
+.protocol-result-meta{display:flex;gap:14px;flex-wrap:wrap;font:10px 'DM Mono',monospace;color:#85aab7;padding:18px 0 10px}
+.protocol-result-meta strong{color:#d8f1ed}
+.protocol-trace{border-top:1px solid #31566b;max-height:340px;overflow:auto}
+.protocol-event{display:grid;grid-template-columns:26px 120px 75px minmax(0,1fr);align-items:center;gap:10px;border-bottom:1px solid #244559;padding:12px 4px;font:10px 'DM Mono',monospace}
+.protocol-number{color:#6f9da9}
+.protocol-command{color:#d5e8e8;overflow-wrap:anywhere}
+.protocol-accepted{color:#5fdfc3}
+.protocol-rejected{color:#f69f97}
+.protocol-reason{color:#9bb3c3;line-height:1.5;overflow-wrap:anywhere}
+.protocol-result-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:16px;font:10px 'DM Mono',monospace;color:#6bbebd}
+.protocol-principle{margin-top:15px;border:1px solid #356270;background:#103340;border-radius:5px;padding:13px;color:#a4d7db;font:11px/1.7 'DM Mono',monospace}
+.protocol-principle strong{color:#65e7d5}
+@media(max-width:850px){.protocol-layout{grid-template-columns:1fr}}
+@media(max-width:560px){.protocol-summary{grid-template-columns:repeat(2,1fr)}.protocol-event{grid-template-columns:24px 1fr auto;gap:6px}.protocol-reason{grid-column:2/-1}.protocol-lab{padding:15px}}
