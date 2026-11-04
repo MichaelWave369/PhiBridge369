@@ -23,6 +23,8 @@ test('Mirror Room renders the initial interface without a JSX runtime error', as
     assert.match(html, /VR Mirror Room/);
     assert.match(html, /ENTER VR \/ QUEST 3/);
     assert.match(html, /Wrist Studio/);
+    assert.match(html, /Protocol Laboratory/);
+    assert.match(html, /RUN DETERMINISTIC REPLAY/);
     assert.match(html, /SIMULATE XR CONTROLLER ACTIONS/);
   } finally {
     await server.close();

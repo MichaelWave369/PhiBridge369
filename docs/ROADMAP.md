@@ -37,9 +37,12 @@
 - [ ] Detailed articulated WebXR hand models, after real device tests
 
 ## R06 — Protocol laboratory
-- [ ] Versioned PHB mock adapter and JOYVEIN protocol spec
-- [ ] PRISM audit schema and replayable test sessions
-- [ ] Security threat model and privacy review
+- [x] Strict versioned PHB/JOYVEIN mock command-envelope schema
+- [x] Local PRISM-style deterministic replay with accepted/rejected delivery trace
+- [x] Packet-loss, duplicate, reordering, wrong-version, forged-consent and emergency-stop scenarios
+- [x] Threat-model and privacy boundary notes for the simulation
+- [ ] Signed/authenticated transport and durable tamper-evident PRISM audit (future research)
+- [ ] Real JOYVEIN-369 transport and PHB adapters (not connected)
 
 ## R07 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority

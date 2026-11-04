@@ -93,6 +93,19 @@ This test harness is local and simulation-only. It does not transmit to physical
 
 See [R05 Wrist Studio research notes](docs/R05_WRIST_STUDIO.md).
 
+## R06 — Local Protocol Laboratory
+
+Use **Protocol Laboratory** beneath the Wrist Studio to replay command envelopes through a mock PHB/JOYVEIN-style protocol. This is a **strictly in-memory simulation**; it uses no sockets, robots, BCI hardware, real optical transport, or real credentials.
+
+1. Choose a scenario: Normal, Dropped packet, Duplicate, Out-of-order, Permission denied, Emergency stop, Wrong version, or Forged permission.
+2. Click **Run deterministic replay** and inspect the accepted/rejected decisions, missed sequence numbers, and final virtual PHB position.
+3. Press **Clear results** to discard the trace. Each replay initializes a fresh independent virtual state.
+4. Note that a packet can request simulated movement, a mock sensory pulse, an emergency stop, a disconnect, or a heartbeat. It **cannot** create consent, connect, or release a stop.
+
+This lab deliberately does not mutate the live Mirror Room session. The operator's consent is supplied as a local test fixture before replay, not a remote transport message. Protocol version and sequence numbers are **not authentication**, encryption, or tamper evidence.
+
+[Protocol v1 mock specification and threat model](docs/R06_PROTOCOL_LAB.md).
+
 ## Repository responsibilities
 
 | Area | Responsibility |
