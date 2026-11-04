@@ -25,6 +25,8 @@ test('Mirror Room renders the initial interface without a JSX runtime error', as
     assert.match(html, /Wrist Studio/);
     assert.match(html, /Protocol Laboratory/);
     assert.match(html, /Vessel Interface Lab/);
+    assert.match(html, /Safety Blueprint Lab/);
+    assert.match(html, /RUN SAFETY FAULT TEST/);
     assert.match(html, /EVALUATE CONTRACT/);
     assert.match(html, /RUN DETERMINISTIC REPLAY/);
     assert.match(html, /SIMULATE XR CONTROLLER ACTIONS/);

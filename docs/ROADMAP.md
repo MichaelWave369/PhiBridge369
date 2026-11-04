@@ -53,7 +53,17 @@
 - [ ] Live PHB inventory/discovery (explicitly not enabled)
 - [ ] Authenticated transport and physical safety certification (future prerequisites)
 
-## R08 — Guarded telepresence (conditional)
+## R08 — Physical Integration Safety Blueprint (simulation only)
+- [x] Independent safety authority state machine distinct from host consent
+- [x] Fail-closed mock stop-loop, guard, watchdog, supply and thermal interlocks
+- [x] Fault latching with manual reset that cannot silently re-arm
+- [x] Browser-based safety fault injection, event trace and regression tests
+- [x] Physical hazard categories and external design-review checklist
+- [ ] Actual mechanical/electrical hazard assessment and energy isolation design
+- [ ] Independently engineered, inspected and validated hardware safety circuits
+- [ ] Real PHB prototype under qualified supervision (not authorized by R08)
+
+## R09 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation
