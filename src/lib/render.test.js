@@ -18,6 +18,8 @@ test('Mirror Room renders the initial interface without a JSX runtime error', as
     assert.match(html, /PHB vessel/);
     assert.match(html, /SIMULATION ENVIRONMENT/);
     assert.match(html, /EMERGENCY STOP/);
+    assert.match(html, /Control Lab/);
+    assert.match(html, /CAPTURE NEUTRAL CENTER/);
   } finally {
     await server.close();
   }

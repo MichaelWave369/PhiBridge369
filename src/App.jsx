@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
+import { pickStandardGamepad, finiteAxis, normalizeGamepad, shouldRepeat } from './lib/gamepad.js';
 import {
   bridgeReducer, canMove, canSense, initialBridgeState,
 } from './lib/bridge.js';
@@ -66,10 +67,82 @@ function Avatar({ pose, connected, stopped }) {
 
 function App() {
   const [state, dispatch] = useReducer(bridgeReducer, initialBridgeState);
+  // Calibration stays local to this tab. No controller identifiers or readings are uploaded.
+  const [deadzone, setDeadzone] = useState(0.22);
+  const [repeatMs, setRepeatMs] = useState(240);
+  const [neutral, setNeutral] = useState({ x: 0, y: 0 });
+  const [padView, setPadView] = useState({
+    supported: true, connected: false, name: '',
+    x: 0, y: 0, direction: null, source: 'NONE',
+  });
+
+  const calibrateNeutral = () => {
+    if (typeof navigator === 'undefined' || typeof navigator.getGamepads !== 'function') return;
+    try {
+      const pad = pickStandardGamepad(navigator.getGamepads());
+      if (!pad) return;
+      setNeutral({ x: finiteAxis(pad.axes?.[0]), y: finiteAxis(pad.axes?.[1]) });
+    } catch {
+      // Some browsers restrict Gamepad API access before a user presses a controller button.
+    }
+  };
+
   const send = (type, payload = {}) => dispatch({ type, ...payload, at: new Date().toLocaleTimeString() });
   const moving = canMove(state);
   const sensing = canSense(state);
   const status = state.emergencyStopped ? 'STOPPED' : state.connected ? 'LINKED' : 'OFFLINE';
+
+  useEffect(() => {
+    if (typeof navigator === 'undefined' || typeof navigator.getGamepads !== 'function') {
+      setPadView((view) => ({ ...view, supported: false, connected: false }));
+      return undefined;
+    }
+
+    let frame = 0;
+    let lastDisplay = -Infinity;
+    let lastStep = -Infinity;
+    let feedbackWasHeld = false;
+
+    const sample = (now) => {
+      let pad = null;
+      try {
+        pad = pickStandardGamepad(navigator.getGamepads());
+      } catch {
+        // Restricted APIs behave like a disconnected controller, never a live link.
+      }
+      const intent = normalizeGamepad(pad, { deadzone, neutral });
+
+      if (now - lastDisplay >= 180) {
+        setPadView({
+          supported: true,
+          connected: Boolean(pad),
+          name: pad ? String(pad.id || 'Standard controller').slice(0, 60) : '',
+          x: intent.x, y: intent.y, direction: intent.direction, source: intent.source,
+        });
+        lastDisplay = now;
+      }
+
+      // Gamepad input is gated again by the bridge reducer, not just by this UI.
+      if (pad && state.connected && !state.emergencyStopped) {
+        if (intent.direction && state.permissions.motion && shouldRepeat(now, lastStep, repeatMs)) {
+          dispatch({ type: 'MOVE', direction: intent.direction, at: 'GAMEPAD' });
+          lastStep = now;
+        }
+        // Standard gamepad A button: a single mock pulse on its rising edge.
+        if (intent.feedbackPressed && !feedbackWasHeld && state.permissions.sensory) {
+          dispatch({ type: 'SENSE', at: 'GAMEPAD' });
+        }
+      }
+      feedbackWasHeld = intent.feedbackPressed;
+      frame = window.requestAnimationFrame(sample);
+    };
+
+    frame = window.requestAnimationFrame(sample);
+    return () => window.cancelAnimationFrame(frame);
+  }, [
+    deadzone, repeatMs, neutral, state.connected, state.emergencyStopped,
+    state.permissions.motion, state.permissions.sensory,
+  ]);
 
   useEffect(() => {
     const onKey = (event) => {
@@ -97,13 +170,13 @@ function App() {
 
       <main>
         <div className="intro">
-          <div className="eyebrow"><span className="line" /> PHI369 LABS / RESEARCH INTERFACE / RUNG 01</div>
+          <div className="eyebrow"><span className="line" /> PHI369 LABS / EMBODIMENT RESEARCH / RUNG 03</div>
           <div className="intro-row">
             <div>
               <h1>The <em>Mirror Room.</em></h1>
               <p className="intro-copy">An experimental bridge between intention and embodiment. Establish consent. Open a simulated link. Explore a virtual vessel.</p>
             </div>
-            <div className="version-pill"><span className="live-point" /> PROTOTYPE 0.1 <span className="separator">/</span> LOCAL SIM</div>
+            <div className="version-pill"><span className="live-point" /> PROTOTYPE 0.3 <span className="separator">/</span> LOCAL SIM</div>
           </div>
         </div>
 
@@ -208,13 +281,62 @@ function App() {
           </div>
         </section>
 
+        <section className="card calibration-card" aria-label="Embodiment Control Lab">
+          <div className="card-heading">
+            <div><span className="eyebrow muted">R03 / EMBODIMENT CALIBRATION</span><h2>Control Lab</h2></div>
+            <span className="keyboard-hint">GAMEPAD API / LOCAL ONLY</span>
+          </div>
+          <p>Bring an Xbox-style controller into the Mirror Room. Gamepad input uses the same consent gates and emergency stop as keyboard commands. No hardware is controlled.</p>
+          <div className="calibration-grid">
+            <div className="calibration-status">
+              <div className="cal-label">CONTROLLER</div>
+              <div className={'pad-status ' + (padView.connected ? 'pad-online' : '')}>
+                <span className="pad-indicator" />
+                {padView.supported ? (padView.connected ? 'STANDARD GAMEPAD DETECTED' : 'AWAITING CONTROLLER') : 'GAMEPAD API UNAVAILABLE'}
+              </div>
+              <p className="cal-note">{padView.connected ? padView.name : 'Connect a controller and press any button while this page is focused. Browsers may hide controllers until the first button press.'}</p>
+              <div className="axis-metrics">
+                <div><span>LEFT X</span><strong>{padView.x.toFixed(2)}</strong></div>
+                <div><span>LEFT Y</span><strong>{padView.y.toFixed(2)}</strong></div>
+                <div><span>INPUT</span><strong>{padView.direction?.toUpperCase() || 'NEUTRAL'}</strong></div>
+                <div><span>SOURCE</span><strong>{padView.source}</strong></div>
+              </div>
+            </div>
+            <div className="calibration-settings">
+              <div className="cal-label">CALIBRATION</div>
+              <label className="calibration-slider">
+                <span>Stick deadzone <output>{deadzone.toFixed(2)}</output></span>
+                <input type="range" min="0.08" max="0.60" step="0.02" value={deadzone}
+                  onChange={(event) => setDeadzone(Number(event.target.value))} />
+              </label>
+              <label className="calibration-slider">
+                <span>Movement repeat interval <output>{repeatMs} ms</output></span>
+                <input type="range" min="120" max="500" step="20" value={repeatMs}
+                  onChange={(event) => setRepeatMs(Number(event.target.value))} />
+              </label>
+              <button className="calibrate-button" type="button" disabled={!padView.connected} onClick={calibrateNeutral}>
+                ◎ &nbsp; CAPTURE NEUTRAL CENTER
+              </button>
+              <p className="cal-note">Release the left stick before calibrating. D-pad or left stick moves the virtual PHB; the A button requests one mock sensory pulse when authorized.</p>
+            </div>
+            <div className="calibration-safety">
+              <div className="cal-label">SIGNAL SAFETY</div>
+              <div className="cal-safety-line"><span>Bridge link</span><strong>{state.connected ? 'CONNECTED' : 'OFFLINE'}</strong></div>
+              <div className="cal-safety-line"><span>Motion gate</span><strong>{moving ? 'OPEN' : 'BLOCKED'}</strong></div>
+              <div className="cal-safety-line"><span>Sensory gate</span><strong>{sensing ? 'OPEN' : 'BLOCKED'}</strong></div>
+              <div className="cal-safety-line"><span>Stop latch</span><strong>{state.emergencyStopped ? 'ENGAGED' : 'READY'}</strong></div>
+              <p className="cal-note">Browser polling reads controller state; only authorized commands reach the simulated vessel. The on-screen stop remains available regardless of controller state.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="principles">
           <span className="principle-number">Φ / 369</span>
           <p>A connection is not a transfer. A copy is not proven continuity. <strong>An occupant is not property.</strong></p>
           <a href="https://github.com/MichaelWave369/PhiBridge369" target="_blank" rel="noreferrer">READ THE RESEARCH CHARTER ↗</a>
         </section>
       </main>
-      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R01 / MIRROR ROOM · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
+      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R03 / CONTROL LAB · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
     </div>
   );
 }
