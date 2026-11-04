@@ -135,3 +135,35 @@ footer{border-top:1px solid #263e50;display:flex;justify-content:space-between;g
 .protocol-principle strong{color:#65e7d5}
 @media(max-width:850px){.protocol-layout{grid-template-columns:1fr}}
 @media(max-width:560px){.protocol-summary{grid-template-columns:repeat(2,1fr)}.protocol-event{grid-template-columns:24px 1fr auto;gap:6px}.protocol-reason{grid-column:2/-1}.protocol-lab{padding:15px}}
+
+/* R07: simulation-only PHB manifest + health handshake */
+.phb-contract{margin-top:13px}
+.phb-contract>p{max-width:1000px}
+.contract-layout{display:grid;grid-template-columns:minmax(260px,.87fr) minmax(0,1.23fr);gap:14px;margin-top:17px}
+.contract-scenarios,.contract-evaluation{min-width:0;background:#0c2638;border:1px solid #2a5364;padding:19px;border-radius:6px}
+.contract-scenarios select{display:block;width:100%;background:#15354a;border:1px solid #3f7c87;color:#e6f8f5;padding:12px;border-radius:4px}
+.contract-telemetry{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+.contract-telemetry div{padding:12px;background:#0b1e30;border:1px solid #24455a;border-radius:4px;min-width:0}
+.contract-telemetry span{display:block;font:9px 'DM Mono',monospace;color:#81a5b5}
+.contract-telemetry strong{display:block;margin-top:7px;font:500 15px 'DM Mono',monospace;color:#c0e9e7}
+.contract-classification{display:flex;align-items:center;gap:13px;border:1px solid #33776c;border-radius:5px;background:#0d373b;padding:15px;margin:2px 0 13px}
+.contract-classification.contract-blocked{background:#3a252f;border-color:#9c5361}
+.contract-status-dot{width:11px;height:11px;background:#52e3c1;border-radius:50%;box-shadow:0 0 12px #52e3c199;flex:none}
+.contract-blocked .contract-status-dot{background:#f08f85;box-shadow:0 0 12px #f08f8580}
+.contract-classification strong{display:block;font:600 18px 'Space Grotesk',sans-serif;color:#9bf1e1}
+.contract-blocked strong{color:#ffc2b5}
+.contract-classification small{display:block;font-size:11px;color:#b8ced0;margin-top:5px}
+.protocol-summary .contract-small-result{font-size:15px;overflow-wrap:anywhere;white-space:normal}
+.contract-reasons-title{margin-top:21px;margin-bottom:8px}
+.contract-reasons{padding:0;margin:0;list-style:none;display:grid;gap:8px}
+.contract-reasons li{display:flex;gap:10px;align-items:flex-start;padding:10px;background:#332330;border:1px solid #734b5c;border-radius:4px;color:#f6c5bd;font-size:12px;line-height:1.5}
+.contract-reasons li span{font-size:17px;line-height:1;color:#f29d94}
+.contract-no-errors{color:#a4dfc9;font-size:12px;line-height:1.6}
+.contract-eval-foot{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font:10px 'DM Mono',monospace;color:#87bec4;border-top:1px solid #30546c;padding-top:17px;margin-top:23px}
+.contract-raw{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px}
+.contract-raw details{border:1px solid #315365;border-radius:5px;background:#0a2132;min-width:0}
+.contract-raw summary{cursor:pointer;padding:15px;color:#9fe2e0;font:10px 'DM Mono',monospace;letter-spacing:.02em}
+.contract-raw summary span{color:#7296a9;display:block;margin-top:7px}
+.contract-raw pre{white-space:pre-wrap;word-break:break-word;padding:15px;border-top:1px solid #24475b;font:10px/1.6 'DM Mono',monospace;color:#bedce0;margin:0}
+@media(max-width:880px){.contract-layout{grid-template-columns:1fr}.contract-raw{grid-template-columns:1fr}}
+@media(max-width:560px){.contract-scenarios,.contract-evaluation{padding:13px}.contract-classification strong{font-size:15px}.protocol-summary .contract-small-result{font-size:13px}}
