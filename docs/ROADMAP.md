@@ -44,7 +44,16 @@
 - [ ] Signed/authenticated transport and durable tamper-evident PRISM audit (future research)
 - [ ] Real JOYVEIN-369 transport and PHB adapters (not connected)
 
-## R07 — Guarded telepresence (conditional)
+## R07 — PHB integration contracts (simulation only)
+- [x] Strict, versioned PHB mock capability manifest and health report schemas
+- [x] Fixed mock identity, safety authority and simulated bounded-motion constraints
+- [x] Reject stale heartbeat, fault, overheating, low battery and malformed telemetry
+- [x] Local operator consent independent of advertised hardware capability
+- [x] Interactive Vessel Interface Lab, failure scenarios and regression tests
+- [ ] Live PHB inventory/discovery (explicitly not enabled)
+- [ ] Authenticated transport and physical safety certification (future prerequisites)
+
+## R08 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

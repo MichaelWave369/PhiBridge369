@@ -106,6 +106,16 @@ This lab deliberately does not mutate the live Mirror Room session. The operator
 
 [Protocol v1 mock specification and threat model](docs/R06_PROTOCOL_LAB.md).
 
+## R07 — PHB Vessel Interface Lab
+
+The **Vessel Interface Lab** evaluates local synthetic PHB capability and health reports before a one-step **isolated virtual** movement is allowed. It provides scenarios for missing consent, stale heartbeats, overheating, low battery, latched stops, manifest version errors, fake hardware, missing motion capability, and invalid sensor data.
+
+The simulator rejects any manifest that claims to represent real hardware. Compatibility requires a versioned mock device identity, a fixed discrete movement limit, simulation-only safety authority, a fresh health report, nominal thermal/battery state, and **separately granted local operator permission**.
+
+Use the scenario selector, click **Evaluate Contract**, inspect pass/fail reasons and optionally expand the mock JSON envelopes. Evaluation is isolated from the live Mirror Room state and from the R06 Protocol Laboratory. No real PHB is discovered, authenticated, connected, or controlled.
+
+**Important:** A successful mock handshake is not a cybersecurity attestation or an operational safety certification. Read [R07 contract specification and physical integration gates](docs/R07_PHB_CONTRACTS.md).
+
 ## Repository responsibilities
 
 | Area | Responsibility |
