@@ -1,6 +1,6 @@
 {
   "name": "phi-bridge-369",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --test src/lib/*.test.js",
-    "evidence": "node scripts/write-evidence.mjs"
+    "evidence": "node scripts/write-evidence.mjs",
+    "campaign": "node scripts/write-campaign.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

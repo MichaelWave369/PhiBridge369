@@ -15,6 +15,7 @@ import {
   safetyOutputEnabled, runSafetyScenario,
 } from './safety-controller.js';
 import { normalizeWristConfig, DEFAULT_WRIST_CONFIG, WRIST_LIMITS } from './xr-calibration.js';
+import { runDigitalTwinCampaign } from './digital-twin.js';
 
 export const EVIDENCE_FORMAT = 'phibridge-evidence/1';
 const bridge = (...actions) => actions.reduce(
@@ -102,6 +103,33 @@ const CHECKS = Object.freeze({
     return a.assessment.permitted && a.mockStepExecuted
       && !b.assessment.permitted && !b.mockStepExecuted;
   },
+  'TWIN-001': () => {
+    const r = runDigitalTwinCampaign({ profile: 'nominal', seed: 369, trials: 2, ticks: 8 });
+    return r.totals.executedMoves === 16 && r.totals.invariantViolations === 0
+      && !r.hardwareAuthorized;
+  },
+  'TWIN-002': () => {
+    const r = runDigitalTwinCampaign({ profile: 'compound', seed: 369, trials: 1, ticks: 12 });
+    const trace = r.runs[0].trace;
+    return r.totals.invariantViolations === 0
+      && trace[3].phase === 'FAULT_LATCHED'
+      && trace[4].phase === 'SAFE_OFF'
+      && trace[4].simulatedSafetyOutput === false
+      && trace[5].phase === 'ARMED' && trace[6].decision === 'BLOCKED_MOVE';
+  },
+  'TWIN-003': () => {
+    const r = runDigitalTwinCampaign({ profile: 'communications', seed: 369, trials: 1, ticks: 12 });
+    return r.totals.rejectedPackets === 4 && r.totals.invariantViolations === 0
+      && r.runs[0].finalBridgeStopped === true && r.runs[0].finalSafetyPhase === 'FAULT_LATCHED';
+  },
+  'TWIN-004': () => {
+    const options = { profile: 'seeded', seed: 369, trials: 3, ticks: 14 };
+    const a = runDigitalTwinCampaign(options);
+    const b = runDigitalTwinCampaign(options);
+    return a.totals.invariantViolations === 0
+      && JSON.stringify(a) === JSON.stringify(b)
+      && a.hardwareAuthorized === false;
+  },
   'XR-001': () => {
     const c = normalizeWristConfig({ ...DEFAULT_WRIST_CONFIG, x: 999, scale: -100 });
     return c.x === WRIST_LIMITS.x[1] && c.scale === WRIST_LIMITS.scale[0]
@@ -159,6 +187,22 @@ export const REQUIREMENTS = Object.freeze([
   { id: 'XR-001', domain: 'Embodiment', title: 'Desktop wrist offsets remain within model limits', level: 'model',
     method: 'Wrist calibration pure function', test: 'src/lib/xr-calibration.test.js',
     owner: 'PhiBridge369', note: 'Does not establish Quest 3 fit or comfort.' },
+
+  { id: 'TWIN-001', domain: 'Digital twin', title: 'Nominal multi-step simulation requires joint gate checks',
+    level: 'model', method: 'Repeated integrated simulated moves', test: 'src/lib/digital-twin.test.js',
+    owner: 'PhiBridge369', note: 'Only virtual step counters and model permission gates were exercised.' },
+  { id: 'TWIN-002', domain: 'Digital twin', title: 'Compound faults and repair never cause automatic restart',
+    level: 'model', method: 'Guard and watchdog fault + separate reset/arm sequence',
+    test: 'src/lib/digital-twin.test.js', owner: 'PhiBridge369',
+    note: 'The latch is software state, not a physical relay or certified circuit.' },
+  { id: 'TWIN-003', domain: 'Digital twin', title: 'Malformed/replayed frames and remote stop fail closed in campaign',
+    level: 'model', method: 'Protocol sequence and stop/re-arm campaign',
+    test: 'src/lib/digital-twin.test.js', owner: 'PhiBridge369',
+    note: 'No real network, cyber attack or physical stop action is tested.' },
+  { id: 'TWIN-004', domain: 'Digital twin', title: 'Mixed fault campaigns are seeded, bounded, and reproducible',
+    level: 'model', method: 'Deterministic seeded integration campaign',
+    test: 'src/lib/digital-twin.test.js', owner: 'PhiBridge369',
+    note: 'Reproducibility does not imply complete fault coverage or real-world validation.' },
 
   { id: 'HW-001', domain: 'Physical', title: 'Independent hardware stop functions are designed and validated',
     level: 'external', method: 'Qualified safety engineering design review and measured stop tests',
