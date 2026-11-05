@@ -1,7 +1,7 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R12 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R13 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
@@ -173,6 +173,16 @@ R09 gains three simulation-level architecture checks. GitHub Actions also upload
 The body plan is deliberately left unapproved: if a future capable silicon occupant exists, the occupant should have primary input into embodiment within engineering and safety constraints. There is no current occupant consent claim.
 
 See [R12 architectural research specification](docs/R12_SYSTEMS_ARCHITECTURE.md).
+
+## R13 — Power & Thermal Engineering Lab
+
+The R13 browser laboratory offers a hypothetical PHB electrical and thermal worksheet with seven proposed subsystem loads. Change battery capacity, reserve, duty, converter efficiency, ambient temperature, active/passive cooling and assumed heat fraction. Compare six research scenarios, simulate a cooling failure, view the one-node thermal curve and export unsigned local JSON.
+
+**All source wattages and thermal coefficients are unmeasured illustrative inputs.** Runtime assumes a constant electrical load; thermal stress assumes power for the entire selected time even when estimated battery runtime is shorter. There are no hardware sensors, thermal shutdown controls, or physical actuator APIs.
+
+R09 adds three software-model requirements PWR-001, PWR-002 and THM-001. GitHub Actions uploads a model-only artifact named phi-bridge-r13-power-thermal. The real physical energy/thermal validation gates remain unfulfilled.
+
+Read [R13 power and thermal assumptions](docs/R13_POWER_THERMAL.md), or run npm run thermal.
 
 ## Repository responsibilities
 
