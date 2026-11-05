@@ -133,7 +133,17 @@
 - [ ] Actual calibrated instruments, benchmark hardware and recorded measurements
 - [ ] Product-specific hazards, independent protocol approval and witnessed tests
 
-## R16 — Guarded telepresence (conditional)
+## R16 — Research Mission Control
+- [x] Read-only cross-linked software research overview from R09–R15
+- [x] Seven external verification workstreams with owner, next research-planning action and open evidence gate
+- [x] Link R09 requirements to R11 hazards, R12 conceptual modules, R14 assumed inputs and R15 draft test plans
+- [x] Model-check counts and unresolved external gaps remain explicitly separate
+- [x] Searchable responsive cockpit, fast lab navigation and unsigned browser snapshot export
+- [x] OPS-001 / OPS-002 cross-link model tests and CI research-only evidence artifact
+- [ ] Authenticated, read-only live GitHub issue/PR status integration (not available in browser)
+- [ ] Independently witnessed physical acceptance and safety evidence
+
+## R17 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

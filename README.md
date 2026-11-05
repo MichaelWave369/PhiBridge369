@@ -1,7 +1,7 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R15 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R16 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
@@ -203,6 +203,16 @@ Marking one of six local checklist items is only a claim that a planning topic w
 The desktop UI includes a top-page jump link and exports unsigned local JSON drafts. CI runs `npm run measure-plan` to verify the template catalog and attach a **phi-bridge-r15-measurement-plans** design-only artifact. R09 gains PLAN-001 and PLAN-002 model requirements.
 
 See [R15 measurement campaign research guide](docs/R15_MEASUREMENT_CAMPAIGNS.md).
+
+## R16 — Research Mission Control
+
+**Research Mission Control** is a read-only cockpit that connects the live **bundled simulation data** in R09–R15. It summarizes software checks and highlights seven external verification gates, 19 preliminary hazards, 16 conceptual subsystems, 22 unverified input assumptions and six unapproved measurement-plan templates.
+
+Select an external workstream to see linked R11 hazards, R12 systems, R14 source assumptions, R15 draft plans and the next research-planning action. Use the search and category filters or jump to a related laboratory. The control room is placed near the top of the site and includes an unsigned local JSON snapshot export.
+
+The local refresh recomputes the bundled software models; it is **not a live GitHub Actions or hardware status reader**. A passing simulation never changes PENDING_EXTERNAL to verified or opens the physical deployment gate. R09 adds OPS-001 and OPS-002 cross-reference/model-boundary tests, and CI uploads a **phi-bridge-r16-mission-control** research-only artifact via \`npm run mission-control\`.
+
+See [R16 Research Mission Control methodology](docs/R16_RESEARCH_MISSION_CONTROL.md).
 
 ## Repository responsibilities
 

@@ -20,7 +20,9 @@ import { evaluateHazardAtlas } from './hazard-atlas.js';
 import { validateSystemGraph, evaluateSystemArchitecture, SYSTEM_MODULES } from './system-architecture.js';
 import { evaluatePowerThermalBudget, budgetPreset } from './power-thermal.js';
 import { ASSUMPTION_FIELDS, appendUnverifiedReport, evaluateAssumptionRegistry } from './assumption-registry.js';
-import { evaluateMeasurementPlan, REQUIRED_PLAN_GATES, validateMeasurementTemplates } from './measurement-campaign.js';
+import { evaluateMeasurementPlan, REQUIRED_PLAN_GATES, validateMeasurementTemplates, MEASUREMENT_CAMPAIGNS } from './measurement-campaign.js';
+import { HAZARDS } from './hazard-atlas.js';
+import { buildMissionQueue, validateMissionLinks } from './mission-priority.js';
 
 export const EVIDENCE_FORMAT = 'phibridge-evidence/1';
 const bridge = (...actions) => actions.reduce(
@@ -107,6 +109,29 @@ const CHECKS = Object.freeze({
     const b = runSafetyScenario('no-consent');
     return a.assessment.permitted && a.mockStepExecuted
       && !b.assessment.permitted && !b.mockStepExecuted;
+  },
+  'OPS-001': () => {
+    const sources={
+      requirements:REQUIREMENTS,
+      hazards:HAZARDS,
+      modules:SYSTEM_MODULES,
+      plans:MEASUREMENT_CAMPAIGNS,
+      fields:ASSUMPTION_FIELDS,
+    };
+    const links=validateMissionLinks(sources);
+    const queue=buildMissionQueue(sources);
+    return links.ok && queue.length===REQUIREMENTS.filter(x=>x.level==='external').length
+      && queue.every(w=>w.evidenceStatus==='PENDING_EXTERNAL'&&!w.hardwareAuthorized);
+  },
+  'OPS-002': () => {
+    const queue=buildMissionQueue({
+      requirements:REQUIREMENTS,hazards:HAZARDS,
+      modules:SYSTEM_MODULES,plans:MEASUREMENT_CAMPAIGNS,
+      fields:ASSUMPTION_FIELDS,
+    });
+    return queue.every(w=>!w.independentlyVerified&&!w.qualifiedReviewerApproved)
+      && queue.every(w=>w.plans.every(p=>p.approvalStatus==='AWAITING_INDEPENDENT_REVIEW'))
+      && queue.every(w=>w.hazards.every(h=>h.externalStatus==='PENDING_EXTERNAL'));
   },
   'PLAN-001': () => {
     const result=evaluateMeasurementPlan({campaignId:'compute-load'});
@@ -282,6 +307,14 @@ export const REQUIREMENTS = Object.freeze([
     method: 'Wrist calibration pure function', test: 'src/lib/xr-calibration.test.js',
     owner: 'PhiBridge369', note: 'Does not establish Quest 3 fit or comfort.' },
 
+  { id: 'OPS-001', domain: 'Mission control', title: 'Every unresolved external requirement has a traceable research workstream',
+    level: 'model', method: 'R09/R11/R12/R14/R15 cross-reference audit and queue assembly',
+    test: 'src/lib/research-mission.test.js', owner: 'PhiBridge369 research coordination',
+    note: 'Workstream completeness in software is not independent verification of physical safety.' },
+  { id: 'OPS-002', domain: 'Mission control', title: 'Research overview cannot imply physical approval from green model results',
+    level: 'model', method: 'Strict pending-evidence and draft-only status invariants',
+    test: 'src/lib/research-mission.test.js', owner: 'Independent research oversight',
+    note: 'No risk ranking, instrument authentication, real-time GitHub status or safety certification is supplied.' },
   { id: 'PLAN-001', domain: 'Measurement plans', title: 'Draft campaigns map to source fields without claiming physical verification',
     level: 'model', method: 'Design template validation and default no-data planning gate',
     test: 'src/lib/measurement-campaign.test.js', owner: 'PHB engineering research',
