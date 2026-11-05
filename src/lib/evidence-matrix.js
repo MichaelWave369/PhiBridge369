@@ -19,6 +19,7 @@ import { runDigitalTwinCampaign } from './digital-twin.js';
 import { evaluateHazardAtlas } from './hazard-atlas.js';
 import { validateSystemGraph, evaluateSystemArchitecture, SYSTEM_MODULES } from './system-architecture.js';
 import { evaluatePowerThermalBudget, budgetPreset } from './power-thermal.js';
+import { ASSUMPTION_FIELDS, appendUnverifiedReport, evaluateAssumptionRegistry } from './assumption-registry.js';
 
 export const EVIDENCE_FORMAT = 'phibridge-evidence/1';
 const bridge = (...actions) => actions.reduce(
@@ -105,6 +106,29 @@ const CHECKS = Object.freeze({
     const b = runSafetyScenario('no-consent');
     return a.assessment.permitted && a.mockStepExecuted
       && !b.assessment.permitted && !b.mockStepExecuted;
+  },
+  'PROV-001': () => {
+    const registry=evaluateAssumptionRegistry();
+    return registry.summary.trackedFields===22
+      && registry.summary.assumptionsOnly===22
+      && registry.summary.independentlyVerified===0
+      && !registry.hardwareAuthorized;
+  },
+  'PROV-002': () => {
+    const reports=appendUnverifiedReport([],{
+      fieldId:'compute.peakW',value:290,
+      sourceReference:'R09-LOCAL-FIXTURE',
+      method:'Synthetic report for model-only provenance checks',
+      conditions:'Synthetic environment; no instrument or hardware measured',
+      observedOn:'2026-11-04',
+    });
+    const registry=evaluateAssumptionRegistry(reports);
+    return registry.summary.reportedUnverified===1
+      && registry.reports[0].reviewStatus==='NOT_REVIEWED'
+      && !registry.reports[0].independentEvidence
+      && registry.projection?.components.find(c=>c.id==='compute')?.peakW===290
+      && registry.baseline.components.find(c=>c.id==='compute')?.peakW===255
+      && !registry.physicalSafetyVerified;
   },
   'PWR-001': () => {
     const r = evaluatePowerThermalBudget();
@@ -239,6 +263,14 @@ export const REQUIREMENTS = Object.freeze([
     method: 'Wrist calibration pure function', test: 'src/lib/xr-calibration.test.js',
     owner: 'PhiBridge369', note: 'Does not establish Quest 3 fit or comfort.' },
 
+  { id: 'PROV-001', domain: 'Provenance', title: 'R13 assumptions are explicitly unverified by default',
+    level: 'model', method: 'Strict source registry and no-approval assertions',
+    test: 'src/lib/assumption-registry.test.js', owner: 'PhiBridge369 / PHB',
+    note: 'All current source wattages are illustrative; no trusted measurement is available.' },
+  { id: 'PROV-002', domain: 'Provenance', title: 'Self-reported values cannot silently become reviewed evidence',
+    level: 'model', method: 'Append-only unreviewed report and isolated what-if preview',
+    test: 'src/lib/assumption-registry.test.js', owner: 'PHB engineering review',
+    note: 'Local browser entries have no source authentication, calibration or independent approval.' },
   { id: 'PWR-001', domain: 'Power', title: 'Model battery demand includes converter losses and reserve',
     level: 'model', method: 'Constant-load electrical arithmetic and energy reserve tests',
     test: 'src/lib/power-thermal.test.js', owner: 'PHB energy research',

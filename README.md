@@ -1,7 +1,7 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R13 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R14 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
@@ -183,6 +183,16 @@ The R13 browser laboratory offers a hypothetical PHB electrical and thermal work
 R09 adds three software-model requirements PWR-001, PWR-002 and THM-001. GitHub Actions uploads a model-only artifact named phi-bridge-r13-power-thermal. The real physical energy/thermal validation gates remain unfulfilled.
 
 Read [R13 power and thermal assumptions](docs/R13_POWER_THERMAL.md), or run npm run thermal.
+
+## R14 — Design Assumptions & Measurement Provenance Registry
+
+The **Assumptions & Measurement Registry** tracks all 22 R13 design values and their origins. Every default wattage and thermal coefficient is an unmeasured estimate. The browser can record a self-reported value plus a method, source reference, date and conditions in **session memory only**.
+
+Reported observations remain `USER_REPORTED_UNVERIFIED`, regardless of how complete their metadata looks. R13's original inputs are never overwritten. The UI offers a separate **what-if preview** that may use unverified reported values, but cannot authenticate them or authorize hardware. Multiple reports are retained, with their provenance visible.
+
+R09 includes two new model tests PROV-001 and PROV-002. CI exports a model-only assumptions snapshot via `npm run provenance` and uploads it as `phi-bridge-r14-unverified-assumptions`. It contains no invented real measurements.
+
+Read [R14 source and measurement requirements](docs/R14_ASSUMPTION_PROVENANCE.md).
 
 ## Repository responsibilities
 

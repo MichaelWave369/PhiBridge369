@@ -1,6 +1,6 @@
 {
   "name": "phi-bridge-369",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,8 @@
     "campaign": "node scripts/write-campaign.mjs",
     "atlas": "node scripts/write-hazard-atlas.mjs",
     "architecture": "node scripts/write-architecture.mjs",
-    "thermal": "node scripts/write-power-thermal.mjs"
+    "thermal": "node scripts/write-power-thermal.mjs",
+    "provenance": "node scripts/write-assumption-registry.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
