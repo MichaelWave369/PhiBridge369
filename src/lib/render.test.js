@@ -33,6 +33,10 @@ test('Mirror Room renders the initial interface without a JSX runtime error', as
     assert.match(html, /Power &amp; Thermal Engineering Lab/);
     assert.match(html, /Assumptions &amp; Measurement Registry/);
     assert.match(html, /Measurement Campaign Designer/);
+    assert.match(html, /Research Mission Control/);
+    assert.match(html, /PHYSICAL DEPLOYMENT GATE: CLOSED/);
+    assert.match(html, /OPEN RESEARCH WORKSTREAMS/);
+    assert.match(html, /REFRESH LOCAL MODEL CHECKS/);
     assert.match(html, /EXPORT UNSIGNED DRAFT JSON/);
     assert.match(html, /DESIGN REVIEW IS NOT TEST EXECUTION/);
     assert.match(html, /ADD UNVERIFIED LOCAL REPORT/);

@@ -17,7 +17,7 @@ export default function ProtocolLab() {
   };
 
   return (
-    <section className="card protocol-lab" aria-label="Protocol Laboratory">
+    <section className="card protocol-lab" id="protocol-lab" aria-label="Protocol Laboratory">
       <div className="card-heading">
         <div>
           <span className="eyebrow muted">R06 / PROTOCOL + PRISM REPLAY</span>

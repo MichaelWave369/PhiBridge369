@@ -79,3 +79,12 @@ jobs:
           path: artifacts/phi-bridge-r15-measurement-plans.json
           if-no-files-found: error
           retention-days: 30
+      - name: Verify R16 research mission control and open external gates
+        run: npm run mission-control
+      - name: Upload R16 research coordination snapshot (uncertified)
+        uses: actions/upload-artifact@v4
+        with:
+          name: phi-bridge-r16-mission-control
+          path: artifacts/phi-bridge-r16-mission-control.json
+          if-no-files-found: error
+          retention-days: 30

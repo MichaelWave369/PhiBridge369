@@ -597,3 +597,65 @@ footer{border-top:1px solid #263e50;display:flex;justify-content:space-between;g
 .measurement-footer span{font:10px 'DM Mono',monospace;color:#bfa6bc}
 @media(max-width:950px){.measurement-layout{grid-template-columns:1fr}.measurement-campaign-buttons{grid-template-columns:1fr 1fr}.measurement-stats{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.measurement-gates,.measurement-campaign-buttons{grid-template-columns:1fr}.measurement-checklist,.measurement-catalog,.measurement-plan{padding:13px}.measurement-lab{padding:15px}}
+
+
+/* R16 research mission cockpit: read-only cross-links, never physical readiness */
+.mission-control{margin-top:14px;scroll-margin-top:24px;border-color:#3d6978}
+.mission-control>p{max-width:1040px}
+.mission-status{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 13px}
+.mission-status>div{min-width:0;background:#0e2b3c;border:1px solid #376175;border-radius:5px;padding:15px}
+.mission-status span{display:block;font:10px 'DM Mono',monospace;color:#8bb4bc}
+.mission-status strong{display:block;margin:10px 0 6px;font:600 23px 'Space Grotesk',sans-serif;color:#75ddcf;overflow-wrap:anywhere}
+.mission-status small{display:block;color:#95b6be;font-size:11px;line-height:1.5}
+.mission-gate{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px;background:#352a38;border:1px solid #9b7580;border-radius:6px}
+.mission-gate strong{font:600 12px 'DM Mono',monospace;color:#ffcaaf}
+.mission-gate p{font-size:11px;color:#dfc9d0;line-height:1.7;max-width:790px;margin:7px 0 0}
+.mission-gate>span{font:600 10px 'DM Mono',monospace;color:#ffc0b2;white-space:nowrap}
+.mission-controls{display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin:17px 0}
+.mission-controls label{display:flex;flex-direction:column;gap:8px;font:10px 'DM Mono',monospace;color:#92b7c5;flex:1;min-width:190px}
+.mission-controls select,.mission-controls input{background:#0e2e41;color:#e7f5f1;border:1px solid #40788a;border-radius:4px;padding:11px 10px;font:11px 'DM Mono',monospace;width:100%}
+.mission-actions{display:flex;flex-wrap:wrap;gap:8px}
+.mission-actions button{padding:12px 10px;border-radius:4px;font:600 10px 'DM Mono',monospace}
+.mission-notice{font:11px 'DM Mono',monospace;color:#b5d6d6}
+.mission-workspace{display:grid;grid-template-columns:minmax(245px,.83fr) minmax(0,1.3fr);gap:15px}
+.mission-queue,.mission-inspector{min-width:0;background:#0b2536;border:1px solid #32576a;border-radius:6px;padding:17px}
+.mission-items{display:grid;gap:8px;margin:12px 0 0;max-height:800px;overflow-y:auto}
+.mission-item{display:flex;flex-direction:column;align-items:start;gap:7px;text-align:left;min-width:0;border:1px solid #365669;background:#112b3d;border-radius:4px;padding:13px;cursor:pointer}
+.mission-item:hover{background:#174051}
+.mission-item.is-selected{border-color:#89e7d8;outline:1px solid #89e7d8}
+.mission-item>span{font:600 10px 'DM Mono',monospace;color:#69d4c7}
+.mission-item strong{font:600 13px/1.45 'Space Grotesk',sans-serif;color:#e2eef0}
+.mission-item small{font:10px/1.6 'DM Mono',monospace;color:#97b8c5}
+.mission-item em{font:600 9px 'DM Mono',monospace;color:#efbaa9;font-style:normal}
+.mission-empty{padding:18px;color:#9cb6bd;font-size:12px;line-height:1.6}
+.mission-selected{font:11px 'DM Mono',monospace;color:#6ee3d2}
+.mission-inspector h3{color:#e6f6f3;font:600 25px/1.3 'Space Grotesk',sans-serif;margin:10px 0}
+.mission-stage{color:#99b8c4;font:11px/1.6 'DM Mono',monospace}
+.mission-next,.mission-verification{padding:14px;border-radius:5px;margin:12px 0}
+.mission-next{background:#0c3640;border:1px solid #2e7a7a}
+.mission-verification{background:#312c3b;border:1px solid #786678}
+.mission-next strong,.mission-verification strong{color:#8ef0da;font:600 11px 'DM Mono',monospace}
+.mission-verification strong{color:#ffe0ba}
+.mission-next p,.mission-verification p{font-size:12px;line-height:1.7;color:#bed6d9;margin:9px 0 0}
+.mission-verification span{display:block;margin-top:10px;color:#e8bdb6;font:9px 'DM Mono',monospace}
+.mission-link-group{border-top:1px solid #325366;padding:13px 0}
+.mission-link-group>strong{color:#7adfcf;font:600 11px 'DM Mono',monospace}
+.mission-link-group p,.mission-link-group li{color:#b3cad3;font-size:11px;line-height:1.7}
+.mission-link-group ul{padding-left:18px;margin:9px 0}
+.mission-link-group li{margin-bottom:6px}
+.mission-link-group li>span{color:#9bebe0;font:10px 'DM Mono',monospace}
+.mission-link-group li small{display:block;color:#d8b9a7;font:9px 'DM Mono',monospace}
+.mission-link-group a,.mission-deep-link a{display:inline-block;margin:5px 7px 6px 0;color:#79e7d6;text-decoration:underline;font:11px/1.7 'DM Mono',monospace}
+.mission-deep-link{display:flex;flex-direction:column;padding:12px;background:#132c40;border:1px solid #355869;border-radius:4px}
+.mission-navigation{margin-top:15px;border:1px solid #365e6d;border-radius:5px;padding:15px;background:#0b2b3e}
+.mission-navigation>strong{display:block;color:#a1d9d3;font:600 10px 'DM Mono',monospace;margin-bottom:12px}
+.mission-navigation>div{display:flex;gap:8px;flex-wrap:wrap}
+.mission-navigation a{display:inline-block;padding:9px 12px;color:#a8eadd;border:1px solid #3a7d83;border-radius:4px;background:#10394a;font:10px 'DM Mono',monospace}
+.mission-navigation a:hover{background:#185261}
+.mission-footer{margin-top:14px;border:1px solid #886c7c;background:#352a39;padding:16px;border-radius:5px}
+.mission-footer strong{color:#ffcfb9;font:600 12px 'DM Mono',monospace}
+.mission-footer p{color:#e0c9d0;font-size:11px;line-height:1.7;margin:9px 0}
+.mission-footer span{color:#bda9be;font:10px 'DM Mono',monospace}
+@media(max-width:980px){.mission-workspace{grid-template-columns:1fr}.mission-items{grid-template-columns:repeat(2,minmax(0,1fr));max-height:480px}.mission-gate{align-items:flex-start;flex-direction:column}}
+@media(max-width:710px){.mission-status{grid-template-columns:repeat(2,minmax(0,1fr))}.mission-control{padding:16px}.mission-queue,.mission-inspector{padding:14px}}
+@media(max-width:480px){.mission-status{grid-template-columns:1fr 1fr}.mission-status strong{font-size:18px}.mission-items{grid-template-columns:1fr}.mission-controls label{width:100%}.mission-actions button{width:100%}.mission-actions{width:100%}}

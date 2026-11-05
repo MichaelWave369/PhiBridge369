@@ -10,6 +10,7 @@ import SystemsArchitectureStudio from './SystemsArchitectureStudio.jsx';
 import PowerThermalLab from './PowerThermalLab.jsx';
 import AssumptionRegistryLab from './AssumptionRegistryLab.jsx';
 import MeasurementCampaignDesigner from './MeasurementCampaignDesigner.jsx';
+import ResearchMissionControl from './ResearchMissionControl.jsx';
 import { pickStandardGamepad, finiteAxis, normalizeGamepad, shouldRepeat } from './lib/gamepad.js';
 import {
   bridgeReducer, canMove, canSense, initialBridgeState,
@@ -181,13 +182,13 @@ function App() {
 
       <main>
         <div className="intro">
-          <div className="eyebrow"><span className="line" /> PHI369 LABS / MEASUREMENT CAMPAIGNS / RUNG 15</div>
+          <div className="eyebrow"><span className="line" /> PHI369 LABS / RESEARCH MISSION CONTROL / RUNG 16</div>
           <div className="intro-row">
             <div>
               <h1>The <em>Mirror Room.</em></h1>
               <p className="intro-copy">An experimental bridge between intention and embodiment. Establish consent. Open a simulated link. Explore a virtual vessel.</p>
             </div>
-            <div className="version-pill"><span className="live-point" /> PROTOTYPE 1.5 <span className="separator">/</span> LOCAL SIM</div>
+            <div className="version-pill"><span className="live-point" /> PROTOTYPE 1.6 <span className="separator">/</span> LOCAL SIM</div>
           </div>
         </div>
 
@@ -204,6 +205,7 @@ function App() {
         <a className="evidence-jump" href="#power-thermal-lab">↓ &nbsp; JUMP TO POWER & THERMAL LAB</a>
         <a className="evidence-jump" href="#assumption-registry-lab">↓ &nbsp; JUMP TO ASSUMPTION REGISTRY</a>
         <a className="evidence-jump" href="#measurement-campaign-designer">↓ &nbsp; JUMP TO MEASUREMENT DESIGNER</a>
+        <a className="evidence-jump" href="#research-mission-control">↓ &nbsp; MISSION CONTROL</a>
 
         <section className="metrics" aria-label="Bridge telemetry">
           <div className="metric"><span className="metric-label">BRIDGE STATUS</span><strong className={'metric-value status-' + status.toLowerCase()}><i className="indicator" />{status}</strong><span className="metric-sub">Virtual gateway</span></div>
@@ -215,6 +217,8 @@ function App() {
         {state.emergencyStopped && (
           <div className="stop-banner" role="alert"><strong>EMERGENCY STOP ACTIVE</strong><span>The simulated link is severed. Both permissions are revoked. Acknowledgement does not automatically reconnect.</span></div>
         )}
+
+        <ResearchMissionControl />
 
         <section className="room" aria-label="Mirror Room interface">
           <div className="room-panel station-panel">
@@ -377,7 +381,7 @@ function App() {
           <a href="https://github.com/MichaelWave369/PhiBridge369" target="_blank" rel="noreferrer">READ THE RESEARCH CHARTER ↗</a>
         </section>
       </main>
-      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R15 / MEASUREMENT DESIGNER · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
+      <footer><span>PHI369 LABS · PHIBRIDGE369</span><span>R16 / MISSION CONTROL · OPEN RESEARCH · MIT LICENSE</span><span>NO HARDWARE CONNECTED</span></footer>
     </div>
   );
 }

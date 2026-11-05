@@ -1,6 +1,6 @@
 {
   "name": "phi-bridge-369",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,7 +14,8 @@
     "architecture": "node scripts/write-architecture.mjs",
     "thermal": "node scripts/write-power-thermal.mjs",
     "provenance": "node scripts/write-assumption-registry.mjs",
-    "measure-plan": "node scripts/write-measurement-plans.mjs"
+    "measure-plan": "node scripts/write-measurement-plans.mjs",
+    "mission-control": "node scripts/write-mission-control.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
