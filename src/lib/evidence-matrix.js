@@ -18,6 +18,7 @@ import { normalizeWristConfig, DEFAULT_WRIST_CONFIG, WRIST_LIMITS } from './xr-c
 import { runDigitalTwinCampaign } from './digital-twin.js';
 import { evaluateHazardAtlas } from './hazard-atlas.js';
 import { validateSystemGraph, evaluateSystemArchitecture, SYSTEM_MODULES } from './system-architecture.js';
+import { evaluatePowerThermalBudget, budgetPreset } from './power-thermal.js';
 
 export const EVIDENCE_FORMAT = 'phibridge-evidence/1';
 const bridge = (...actions) => actions.reduce(
@@ -104,6 +105,24 @@ const CHECKS = Object.freeze({
     const b = runSafetyScenario('no-consent');
     return a.assessment.permitted && a.mockStepExecuted
       && !b.assessment.permitted && !b.mockStepExecuted;
+  },
+  'PWR-001': () => {
+    const r = evaluatePowerThermalBudget();
+    return r.electrical.estimatedSourceDrawW > r.electrical.estimatedOutputW
+      && r.electrical.usableBatteryWh === 960 && !r.hardwareConnected;
+  },
+  'PWR-002': () => {
+    const eco = evaluatePowerThermalBudget(budgetPreset('eco'));
+    const heavy = evaluatePowerThermalBudget(budgetPreset('intensive'));
+    return eco.electrical.estimatedRuntimeHours > heavy.electrical.estimatedRuntimeHours
+      && eco.electrical.assumedHeatGenerationW < heavy.electrical.assumedHeatGenerationW;
+  },
+  'THM-001': () => {
+    const nominal = evaluatePowerThermalBudget(budgetPreset('intensive'));
+    const fault = evaluatePowerThermalBudget(budgetPreset('fan-loss'));
+    return fault.thermal.endTemperatureC > nominal.thermal.endTemperatureC
+      && fault.thermal.points[30].cooling === 'FAILED'
+      && !fault.physicalSafetyVerified && !fault.hardwareAuthorized;
   },
   'SYS-001': () => {
     const graph=validateSystemGraph();
@@ -220,6 +239,18 @@ export const REQUIREMENTS = Object.freeze([
     method: 'Wrist calibration pure function', test: 'src/lib/xr-calibration.test.js',
     owner: 'PhiBridge369', note: 'Does not establish Quest 3 fit or comfort.' },
 
+  { id: 'PWR-001', domain: 'Power', title: 'Model battery demand includes converter losses and reserve',
+    level: 'model', method: 'Constant-load electrical arithmetic and energy reserve tests',
+    test: 'src/lib/power-thermal.test.js', owner: 'PHB energy research',
+    note: 'No measured wattage, battery chemistry or physical storage is included.' },
+  { id: 'PWR-002', domain: 'Power', title: 'More modeled work lowers estimated battery endurance',
+    level: 'model', method: 'Economy versus intensive hypothetical load comparison',
+    test: 'src/lib/power-thermal.test.js', owner: 'PHB energy research',
+    note: 'This is not an empirical battery discharge curve.' },
+  { id: 'THM-001', domain: 'Thermal', title: 'Loss of modeled cooling raises the effective temperature',
+    level: 'model', method: 'Simplified thermal RC failure-injection scenario',
+    test: 'src/lib/power-thermal.test.js', owner: 'PHB thermal research',
+    note: 'The effective temperature and visual marker are neither measured nor safety-rated.' },
   { id: 'SYS-001', domain: 'Architecture', title: 'Proposed vessel dependency topology is valid and explicitly nonphysical',
     level: 'model', method: 'Acyclic dependency-graph and conceptual module validation',
     test: 'src/lib/system-architecture.test.js', owner: 'PhiBridge369 / PHB',

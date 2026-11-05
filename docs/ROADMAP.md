@@ -103,7 +103,17 @@
 - [ ] Measured electrical, thermal, mechanical and optical design assumptions
 - [ ] Qualified independent physical safety and occupant governance review
 
-## R13 — Guarded telepresence (conditional)
+## R13 — Hypothetical Power & Thermal Engineering Lab
+- [x] Seven conceptual load estimates with configurable workload and battery capacity
+- [x] Reserve, converter loss and constant-draw runtime calculations
+- [x] Simplified lumped thermal response, ambient/threshold and cooling-failure scenarios
+- [x] Six repeatable research presets, validation tests and browser visualization
+- [x] R09 PWR-001, PWR-002 and THM-001 model checks
+- [x] CI power/thermal assumptions artifact
+- [ ] Real PHB electrical loads, battery discharge behavior and thermal measurements
+- [ ] Independent physical power, protection, thermal and safety engineering review
+
+## R14 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

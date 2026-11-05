@@ -30,6 +30,8 @@ test('Mirror Room renders the initial interface without a JSX runtime error', as
     assert.match(html, /Digital Twin Verification Lab/);
     assert.match(html, /Hazard Coverage Atlas/);
     assert.match(html, /PHB Systems Architecture Studio/);
+    assert.match(html, /Power &amp; Thermal Engineering Lab/);
+    assert.match(html, /CALCULATE HYPOTHETICAL BUDGET/);
     assert.match(html, /SIMULATE OUTAGE IN THIS MODULE/);
     assert.match(html, /BODY PLAN: OCCUPANT-LED/);
     assert.match(html, /RUN COVERAGE SCAN/);

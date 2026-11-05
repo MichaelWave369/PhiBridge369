@@ -52,3 +52,12 @@ jobs:
           path: artifacts/phi-bridge-r12-systems-architecture.json
           if-no-files-found: error
           retention-days: 30
+      - name: Verify R13 hypothetical power and thermal model
+        run: npm run thermal
+      - name: Upload R13 power and thermal worksheet (unmeasured)
+        uses: actions/upload-artifact@v4
+        with:
+          name: phi-bridge-r13-power-thermal
+          path: artifacts/phi-bridge-r13-power-thermal.json
+          if-no-files-found: error
+          retention-days: 30
