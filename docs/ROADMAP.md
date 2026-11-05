@@ -123,7 +123,17 @@
 - [ ] Calibrated instrument measurements with independently authenticated provenance
 - [ ] Independent engineering review and approval workflow (not implemented)
 
-## R15 — Guarded telepresence (conditional)
+## R15 — Measurement Campaign Designer
+- [x] Six reproducible measurement design templates and clear specialist-review categories
+- [x] Required equipment and calibration planning, conditions, method, uncertainty and raw-data handling
+- [x] Six independent checklist gates, never conflated with physical test authorization
+- [x] R14 field links, R09 evidence IDs and R11 preliminary hazard links
+- [x] Interactive draft planner and unsigned session-only JSON export
+- [x] PLAN-001 and PLAN-002 model checks with CI design-only artifact
+- [ ] Actual calibrated instruments, benchmark hardware and recorded measurements
+- [ ] Product-specific hazards, independent protocol approval and witnessed tests
+
+## R16 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

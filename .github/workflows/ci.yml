@@ -70,3 +70,12 @@ jobs:
           path: artifacts/phi-bridge-r14-assumptions.json
           if-no-files-found: error
           retention-days: 30
+      - name: Verify R15 measurement planning catalog and evidence boundaries
+        run: npm run measure-plan
+      - name: Upload R15 measurement campaign designs (unapproved)
+        uses: actions/upload-artifact@v4
+        with:
+          name: phi-bridge-r15-measurement-plans
+          path: artifacts/phi-bridge-r15-measurement-plans.json
+          if-no-files-found: error
+          retention-days: 30

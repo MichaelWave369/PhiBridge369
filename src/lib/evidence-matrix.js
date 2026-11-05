@@ -20,6 +20,7 @@ import { evaluateHazardAtlas } from './hazard-atlas.js';
 import { validateSystemGraph, evaluateSystemArchitecture, SYSTEM_MODULES } from './system-architecture.js';
 import { evaluatePowerThermalBudget, budgetPreset } from './power-thermal.js';
 import { ASSUMPTION_FIELDS, appendUnverifiedReport, evaluateAssumptionRegistry } from './assumption-registry.js';
+import { evaluateMeasurementPlan, REQUIRED_PLAN_GATES, validateMeasurementTemplates } from './measurement-campaign.js';
 
 export const EVIDENCE_FORMAT = 'phibridge-evidence/1';
 const bridge = (...actions) => actions.reduce(
@@ -106,6 +107,24 @@ const CHECKS = Object.freeze({
     const b = runSafetyScenario('no-consent');
     return a.assessment.permitted && a.mockStepExecuted
       && !b.assessment.permitted && !b.mockStepExecuted;
+  },
+  'PLAN-001': () => {
+    const result=evaluateMeasurementPlan({campaignId:'compute-load'});
+    return validateMeasurementTemplates().ok
+      && result.summary.status==='DRAFT_INCOMPLETE'
+      && !result.measuredDataPresent && !result.hardwareTestAuthorized
+      && !result.qualifiedReviewerSignedOff;
+  },
+  'PLAN-002': () => {
+    const result=evaluateMeasurementPlan({
+      campaignId:'safety-review',
+      checkedGateIds:REQUIRED_PLAN_GATES.map(x=>x.id),
+    });
+    return result.summary.status==='DRAFT_CHECKLIST_MARKED'
+      && result.summary.approvalStatus==='AWAITING_INDEPENDENT_REVIEW'
+      && result.campaign.category==='REVIEW_ONLY_NO_OPERATION'
+      && !result.procedureApproved && !result.physicalSafetyVerified
+      && !result.hardwareTestAuthorized && !result.experimentalDataCollected;
   },
   'PROV-001': () => {
     const registry=evaluateAssumptionRegistry();
@@ -263,6 +282,14 @@ export const REQUIREMENTS = Object.freeze([
     method: 'Wrist calibration pure function', test: 'src/lib/xr-calibration.test.js',
     owner: 'PhiBridge369', note: 'Does not establish Quest 3 fit or comfort.' },
 
+  { id: 'PLAN-001', domain: 'Measurement plans', title: 'Draft campaigns map to source fields without claiming physical verification',
+    level: 'model', method: 'Design template validation and default no-data planning gate',
+    test: 'src/lib/measurement-campaign.test.js', owner: 'PHB engineering research',
+    note: 'Protocol design is not execution; equipment, real measurements and independent review are missing.' },
+  { id: 'PLAN-002', domain: 'Measurement plans', title: 'Complete draft checklists never authorize physical or safety experiments',
+    level: 'model', method: 'Review-only safety plan with all user-marked planning gates',
+    test: 'src/lib/measurement-campaign.test.js', owner: 'Independent PHB safety reviewer',
+    note: 'No qualified sign-off, calibrated instrumentation, safe-state verification or live testing is present.' },
   { id: 'PROV-001', domain: 'Provenance', title: 'R13 assumptions are explicitly unverified by default',
     level: 'model', method: 'Strict source registry and no-approval assertions',
     test: 'src/lib/assumption-registry.test.js', owner: 'PhiBridge369 / PHB',
