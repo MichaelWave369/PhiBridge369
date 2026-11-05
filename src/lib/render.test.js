@@ -32,6 +32,9 @@ test('Mirror Room renders the initial interface without a JSX runtime error', as
     assert.match(html, /PHB Systems Architecture Studio/);
     assert.match(html, /Power &amp; Thermal Engineering Lab/);
     assert.match(html, /Assumptions &amp; Measurement Registry/);
+    assert.match(html, /Measurement Campaign Designer/);
+    assert.match(html, /EXPORT UNSIGNED DRAFT JSON/);
+    assert.match(html, /DESIGN REVIEW IS NOT TEST EXECUTION/);
     assert.match(html, /ADD UNVERIFIED LOCAL REPORT/);
     assert.match(html, /ENGINEERING REVIEW AND ACCEPTANCE/);
     assert.match(html, /CALCULATE HYPOTHETICAL BUDGET/);

@@ -1,7 +1,7 @@
 # Φ PhiBridge369
 ### Consciousness continuity hypotheses · voluntary interfaces · synthetic embodiment
 
-**R01–R14 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
+**R01–R15 — Mirror Room research platform** is a browser-based **simulation**, not a mind-upload machine. It demonstrates a consent-gated bridge between a human control station and a virtual PHB digital twin, with an independently modeled connection, local commands, feedback, emergency stop, and PRISM-style event audit.
 
 > **A connection is not a transfer. A copy is not proven continuity. An occupant is not property.**
 
@@ -193,6 +193,16 @@ Reported observations remain `USER_REPORTED_UNVERIFIED`, regardless of how compl
 R09 includes two new model tests PROV-001 and PROV-002. CI exports a model-only assumptions snapshot via `npm run provenance` and uploads it as `phi-bridge-r14-unverified-assumptions`. It contains no invented real measurements.
 
 Read [R14 source and measurement requirements](docs/R14_ASSUMPTION_PROVENANCE.md).
+
+## R15 — Measurement Campaign Designer
+
+The R15 **Measurement Campaign Designer** provides six planning templates covering compute power, battery characterization, converter efficiency, thermal response, optical/visual interface demand, and independent safety-function review. Each protocol lists prospective equipment, conditions, reproducibility concerns, proposed data-handling steps, linked R14 source fields, R09 requirements and R11 hazards.
+
+Marking one of six local checklist items is only a claim that a planning topic was considered. Even a fully marked list remains an **unapproved draft**. No physical test runs, source authentication, qualified reviewer acceptance, or measured data import occur. The independent safety-function template is **review-only** and must never be read as a live stop-test procedure.
+
+The desktop UI includes a top-page jump link and exports unsigned local JSON drafts. CI runs `npm run measure-plan` to verify the template catalog and attach a **phi-bridge-r15-measurement-plans** design-only artifact. R09 gains PLAN-001 and PLAN-002 model requirements.
+
+See [R15 measurement campaign research guide](docs/R15_MEASUREMENT_CAMPAIGNS.md).
 
 ## Repository responsibilities
 
