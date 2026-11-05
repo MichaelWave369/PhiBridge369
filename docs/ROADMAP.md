@@ -113,7 +113,17 @@
 - [ ] Real PHB electrical loads, battery discharge behavior and thermal measurements
 - [ ] Independent physical power, protection, thermal and safety engineering review
 
-## R14 — Guarded telepresence (conditional)
+## R14 — Design Assumptions & Measurement Provenance Registry
+- [x] Twenty-two R13 source values indexed by stable field ID, unit and R09 requirement
+- [x] Clear separation between estimates and locally reported, unverified observations
+- [x] Bounded append-only session reports with source, method, conditions and date
+- [x] Isolated what-if comparison, no automatic overwrite of R13 baseline
+- [x] Two R09 provenance boundary checks and CI unverified-assumptions artifact
+- [x] Interactive desktop registry and unsigned local export
+- [ ] Calibrated instrument measurements with independently authenticated provenance
+- [ ] Independent engineering review and approval workflow (not implemented)
+
+## R15 — Guarded telepresence (conditional)
 - [ ] Onboard independent PHB safety authority
 - [ ] Electrical/mechanical safety and privacy review
 - [ ] Fault injection in simulation

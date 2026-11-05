@@ -61,3 +61,12 @@ jobs:
           path: artifacts/phi-bridge-r13-power-thermal.json
           if-no-files-found: error
           retention-days: 30
+      - name: Verify R14 assumption provenance boundary
+        run: npm run provenance
+      - name: Upload R14 assumption provenance snapshot (unverified)
+        uses: actions/upload-artifact@v4
+        with:
+          name: phi-bridge-r14-unverified-assumptions
+          path: artifacts/phi-bridge-r14-assumptions.json
+          if-no-files-found: error
+          retention-days: 30

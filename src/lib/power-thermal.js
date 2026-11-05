@@ -63,11 +63,34 @@ export function budgetPreset(id){
   return {...BASE_ASSUMPTIONS,...found.changes};
 }
 const round=(x,digits=2)=>Number(x.toFixed(digits));
-export function evaluatePowerThermalBudget(settings={}){
+/**
+ * Optional what-if overrides are UNVERIFIED research proposals, never
+ * approved measurements. They modify only the returned scenario calculation.
+ */
+export function evaluatePowerThermalBudget(settings={}, options={}){
   const a=validateBudgetInputs(settings);
+  if(!options || typeof options !== 'object' || Array.isArray(options)
+    || Object.keys(options).some(key=>key!=='componentOverrides')) {
+    throw new TypeError('Unknown budget options');
+  }
+  const overrides=options.componentOverrides ?? {};
+  if(!overrides || typeof overrides!=='object' || Array.isArray(overrides)
+    || Object.keys(overrides).some(id=>!POWER_COMPONENTS.some(c=>c.id===id))){
+    throw new TypeError('Unknown component override');
+  }
   const components=POWER_COMPONENTS.map(c=>{
-    const loadW=c.idleW+(c.peakW-c.idleW)*a.duty;
-    return {...c,estimatedLoadW:round(loadW)};
+    const candidate=overrides[c.id] ?? {};
+    if(!candidate || typeof candidate!=='object' || Array.isArray(candidate)
+      || Object.keys(candidate).some(k=>!['idleW','peakW'].includes(k))) {
+      throw new TypeError('Invalid component estimate override');
+    }
+    const idleW=candidate.idleW ?? c.idleW;
+    const peakW=candidate.peakW ?? c.peakW;
+    finiteRange(c.id+'.idleW',idleW,[0,2000]);
+    finiteRange(c.id+'.peakW',peakW,[0,2000]);
+    if(peakW<idleW)throw new RangeError('Component peak must not be below idle: '+c.id);
+    const loadW=idleW+(peakW-idleW)*a.duty;
+    return {...c,idleW,peakW,estimatedLoadW:round(loadW)};
   });
   const outputW=components.reduce((n,c)=>n+c.estimatedLoadW,0);
   const sourceDrawW=outputW/a.conversionEfficiency;
